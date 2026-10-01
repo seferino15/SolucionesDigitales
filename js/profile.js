@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Error inesperado:", error);
         mostrarError("Ha ocurrido un error inesperado.");
 
     }
@@ -41,14 +41,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function cargarNegocio(business) {
 
-    document.title = business.name;
+    console.log("NEGOCIO CARGADO:", business);
+
+    document.title = business.name || "Soluciones Digitales";
 
     const nombre = document.querySelector("[data-business-name]");
     const descripcion = document.querySelector("[data-business-description]");
     const direccion = document.querySelector("[data-business-address]");
 
     if (nombre) {
-        nombre.textContent = business.name;
+        nombre.textContent = business.name || "";
     }
 
     if (descripcion) {
@@ -56,9 +58,16 @@ function cargarNegocio(business) {
     }
 
     if (direccion) {
-        direccion.textContent = business.address || "";
+        direccion.textContent = [
+            business.address,
+            business.city,
+            business.province
+        ]
+        .filter(Boolean)
+        .join(" · ");
     }
 
+    // Colores
     if (business.primary_color) {
         document.documentElement.style.setProperty(
             "--primary-color",
@@ -73,6 +82,7 @@ function cargarNegocio(business) {
         );
     }
 
+    // Enlaces
     crearBoton(
         "Google",
         business.google_url,
@@ -105,7 +115,9 @@ function crearBoton(texto, url, tipo) {
 
     if (!url) return;
 
-    const contenedor = document.querySelector("[data-business-links]");
+    const contenedor = document.querySelector(
+        "[data-business-links]"
+    );
 
     if (!contenedor) return;
 
@@ -114,7 +126,9 @@ function crearBoton(texto, url, tipo) {
     boton.href = url;
     boton.target = "_blank";
     boton.rel = "noopener noreferrer";
+
     boton.className = "profile-button";
+    boton.dataset.type = tipo;
 
     boton.textContent = texto;
 
@@ -133,23 +147,33 @@ async function cargarPromocion(businessId) {
         .maybeSingle();
 
     if (error) {
-        console.error("Error cargando promoción:", error);
+        console.error(
+            "Error cargando promoción:",
+            error
+        );
         return;
     }
 
     if (!data) return;
 
-    const promo = document.querySelector("[data-promotion]");
+    const promo = document.querySelector(
+        "[data-promotion]"
+    );
 
     if (!promo) return;
 
     promo.style.display = "block";
 
-    const titulo = promo.querySelector("[data-promotion-title]");
-    const descripcion = promo.querySelector("[data-promotion-description]");
+    const titulo = promo.querySelector(
+        "[data-promotion-title]"
+    );
+
+    const descripcion = promo.querySelector(
+        "[data-promotion-description]"
+    );
 
     if (titulo) {
-        titulo.textContent = data.title;
+        titulo.textContent = data.title || "";
     }
 
     if (descripcion) {
