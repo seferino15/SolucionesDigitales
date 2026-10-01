@@ -28,13 +28,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        console.log("NEGOCIO CARGADO:", business);
+      console.log("NEGOCIO CARGADO:", business);
 
-        cargarNegocio(business);
+cargarNegocio(business);
 
-        await cargarHorario(business.id);
+await registrarVisita(business.id);
 
-        await cargarPromocion(business.id);
+await cargarHorario(business.id);
+await cargarPromocion(business.id);
 
     } catch (error) {
 
