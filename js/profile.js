@@ -1,190 +1,423 @@
-<!DOCTYPE html>
-<html lang="es">
+document.addEventListener("DOMContentLoaded", async () => {
 
-<head>
+    const params = new URLSearchParams(window.location.search);
+    const cliente = params.get("cliente");
 
-    <meta charset="UTF-8">
+    if (!cliente) {
+        mostrarError("No se ha especificado ningún negocio.");
+        return;
+    }
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    try {
 
-    <title>Perfil digital</title>
+        const { data: business, error } = await supabaseClient
+            .from("businesses")
+            .select("*")
+            .eq("slug", cliente)
+            .eq("active", true)
+            .single();
 
-    <link
-        rel="stylesheet"
-        href="../css/profile.css"
-    >
+        if (error) {
+            console.error("Error cargando negocio:", error);
+            mostrarError("No se ha podido cargar el negocio.");
+            return;
+        }
 
-</head>
+        if (!business) {
+            mostrarError("Negocio no encontrado.");
+            return;
+        }
 
-<body>
+        console.log("NEGOCIO CARGADO:", business);
 
-    <main class="profile-page">
+        cargarNegocio(business);
 
-        <section class="profile-card">
+        await cargarHorario(business.id);
 
-            <!-- LOGO -->
-            <div class="profile-logo">
-                <span>SD</span>
-            </div>
+        await cargarPromocion(business.id);
 
-            <!-- TIPO -->
-            <div class="profile-label">
-                PERFIL DIGITAL
-            </div>
+    } catch (error) {
 
-            <!-- NEGOCIO -->
-            <h1 data-business-name>
-                Cargando negocio...
-            </h1>
+        console.error("Error inesperado:", error);
 
-            <p
-                class="profile-description"
-                data-business-description
-            >
-            </p>
+        mostrarError(
+            "Ha ocurrido un error inesperado."
+        );
 
+    }
 
-            <!-- PROMOCIÓN -->
-            <section
-                class="promotion-card"
-                data-promotion
-                style="display:none;"
-            >
-
-                <div class="promotion-label">
-                    PROMOCIÓN
-                </div>
-
-                <h2 data-promotion-title></h2>
-
-                <p data-promotion-description></p>
-
-            </section>
+});
 
 
-            <!-- ENLACES -->
-            <div
-                class="profile-links"
-                data-business-links
-            >
-            </div>
+function cargarNegocio(business) {
+
+    document.title =
+        business.name || "Soluciones Digitales";
 
 
-            <!-- HORARIO -->
-            <section class="info-card">
+    // NOMBRE
 
-                <div class="info-title">
-                    HORARIO
-                </div>
+    const nombre =
+        document.querySelector(
+            "[data-business-name]"
+        );
 
-                <div
-                    class="info-value"
-                    data-business-hours
-                >
-                    —
-                </div>
+    if (nombre) {
 
-            </section>
+        nombre.textContent =
+            business.name || "";
+
+    }
 
 
-            <!-- DIRECCIÓN -->
-            <section class="info-card">
+    // DESCRIPCIÓN
 
-                <div class="info-title">
-                    DIRECCIÓN
-                </div>
+    const descripcion =
+        document.querySelector(
+            "[data-business-description]"
+        );
 
-                <div
-                    class="info-value"
-                    data-business-address
-                >
-                    —
-                </div>
+    if (descripcion) {
 
-            </section>
+        descripcion.textContent =
+            business.description || "";
+
+    }
 
 
-            <!-- COMPARTIR -->
-            <button
-                class="share-button"
-                type="button"
-                onclick="compartirPerfil()"
-            >
-                Compartir perfil
-            </button>
+    // DIRECCIÓN
+
+    const direccion =
+        document.querySelector(
+            "[data-business-address]"
+        );
+
+    if (direccion) {
+
+        const partes = [
+            business.address,
+            business.city,
+            business.province
+        ].filter(Boolean);
+
+        direccion.textContent =
+            partes.join(" · ");
+
+    }
 
 
-            <!-- FOOTER -->
-            <div class="profile-footer">
+    // COLORES
 
-                Powered by
-                <strong>Soluciones Digitales</strong>
+    if (business.primary_color) {
 
-            </div>
+        document.documentElement.style.setProperty(
+            "--primary-color",
+            business.primary_color
+        );
 
-        </section>
+    }
 
-    </main>
+    if (business.secondary_color) {
 
+        document.documentElement.style.setProperty(
+            "--secondary-color",
+            business.secondary_color
+        );
 
-    <!-- SUPABASE -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="../js/supabase.js"></script>
-
-    <script src="../js/profile.js"></script>
+    }
 
 
-    <!-- COMPARTIR -->
+    // ENLACES
 
-    <script>
+    crearBoton(
+        "Google",
+        business.google_url,
+        "google"
+    );
 
-        async function compartirPerfil() {
+    crearBoton(
+        "Instagram",
+        business.instagram_url,
+        "instagram"
+    );
 
-            const url = window.location.href;
+    crearBoton(
+        "WhatsApp",
+        business.whatsapp,
+        "whatsapp"
+    );
 
-            if (navigator.share) {
+    crearBoton(
+        "Web",
+        business.website,
+        "web"
+    );
 
-                try {
+}
 
-                    await navigator.share({
-                        title: document.title,
-                        url: url
-                    });
 
-                } catch (error) {
+function crearBoton(texto, url, tipo) {
 
-                    console.log("Compartir cancelado");
+    if (!url) return;
 
+    const contenedor =
+        document.querySelector(
+            "[data-business-links]"
+        );
+
+    if (!contenedor) return;
+
+
+    const boton =
+        document.createElement("a");
+
+
+    boton.href = url;
+
+    boton.target = "_blank";
+
+    boton.rel =
+        "noopener noreferrer";
+
+    boton.className =
+        "profile-button";
+
+    boton.dataset.type =
+        tipo;
+
+    boton.textContent =
+        texto;
+
+
+    contenedor.appendChild(boton);
+
+}
+
+
+async function cargarHorario(businessId) {
+
+    const { data, error } =
+        await supabaseClient
+
+            .from("business_hours")
+
+            .select("*")
+
+            .eq(
+                "business_id",
+                businessId
+            )
+
+            .order(
+                "day_of_week",
+                {
+                    ascending: true
                 }
+            );
 
-            } else {
 
-                try {
+    if (error) {
 
-                    await navigator.clipboard.writeText(url);
+        console.error(
+            "Error cargando horario:",
+            error
+        );
 
-                    alert("Enlace copiado al portapapeles");
+        return;
 
-                } catch (error) {
+    }
 
-                    prompt(
-                        "Copia este enlace:",
-                        url
-                    );
 
-                }
+    const elemento =
+        document.querySelector(
+            "[data-business-hours]"
+        );
 
-            }
+
+    if (!elemento) return;
+
+
+    if (!data || data.length === 0) {
+
+        elemento.textContent = "Consultar";
+
+        return;
+
+    }
+
+
+    const dias = {
+
+        0: "Domingo",
+
+        1: "Lunes",
+
+        2: "Martes",
+
+        3: "Miércoles",
+
+        4: "Jueves",
+
+        5: "Viernes",
+
+        6: "Sábado"
+
+    };
+
+
+    const hoy =
+        new Date().getDay();
+
+
+    const horarioHoy =
+        data.find(
+            dia =>
+                Number(dia.day_of_week) === hoy
+        );
+
+
+    if (horarioHoy) {
+
+        if (horarioHoy.closed) {
+
+            elemento.textContent =
+                "Cerrado hoy";
+
+        } else {
+
+            const apertura =
+                horarioHoy.open_time
+                || "";
+
+            const cierre =
+                horarioHoy.close_time
+                || "";
+
+            elemento.textContent =
+                `${apertura} – ${cierre}`;
 
         }
 
-    </script>
+    } else {
 
-</body>
+        elemento.textContent =
+            "Consultar horario";
 
-</html>
+    }
+
+}
+
+
+async function cargarPromocion(businessId) {
+
+    const { data, error } =
+        await supabaseClient
+
+            .from("promotions")
+
+            .select("*")
+
+            .eq(
+                "business_id",
+                businessId
+            )
+
+            .eq(
+                "active",
+                true
+            )
+
+            .limit(1)
+
+            .maybeSingle();
+
+
+    if (error) {
+
+        console.error(
+            "Error cargando promoción:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if (!data) return;
+
+
+    const promo =
+        document.querySelector(
+            "[data-promotion]"
+        );
+
+
+    if (!promo) return;
+
+
+    promo.style.display =
+        "block";
+
+
+    const titulo =
+        promo.querySelector(
+            "[data-promotion-title]"
+        );
+
+
+    const descripcion =
+        promo.querySelector(
+            "[data-promotion-description]"
+        );
+
+
+    if (titulo) {
+
+        titulo.textContent =
+            data.title || "";
+
+    }
+
+
+    if (descripcion) {
+
+        descripcion.textContent =
+            data.description || "";
+
+    }
+
+}
+
+
+function mostrarError(mensaje) {
+
+    document.body.innerHTML = `
+
+        <main style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:30px;
+            font-family:Arial,sans-serif;
+            text-align:center;
+        ">
+
+            <div>
+
+                <h1>
+                    Soluciones Digitales
+                </h1>
+
+                <p>
+                    ${mensaje}
+                </p>
+
+            </div>
+
+        </main>
+
+    `;
+
+}
