@@ -267,37 +267,37 @@ async function cargarHorario(businessId) {
 
         {
             numero: 1,
-            nombre: "Lunes"
+            nombre: "Lunes   "
         },
 
         {
             numero: 2,
-            nombre: "Martes"
+            nombre: "Martes   "
         },
 
         {
             numero: 3,
-            nombre: "Miércoles"
+            nombre: "Miércoles   "
         },
 
         {
             numero: 4,
-            nombre: "Jueves"
+            nombre: "Jueves   "
         },
 
         {
             numero: 5,
-            nombre: "Viernes"
+            nombre: "Viernes   "
         },
 
         {
             numero: 6,
-            nombre: "Sábado"
+            nombre: "Sábado   "
         },
 
         {
             numero: 0,
-            nombre: "Domingo"
+            nombre: "Domingo   "
         }
 
     ];
