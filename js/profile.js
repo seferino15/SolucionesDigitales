@@ -1,105 +1,120 @@
 document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    const params = new URLSearchParams(window.location.search);
 
-const params = new URLSearchParams(window.location.search);
+    const cliente = params.get("cliente");
+    const deviceCode = params.get("d");
 
-const cliente = params.get("cliente");
-const deviceCode = params.get("d");
-
-if (!cliente && !deviceCode) {
-    mostrarError("No se ha especificado ningún negocio ni dispositivo.");
-    return;
-}
+    if (!cliente && !deviceCode) {
+        mostrarError("No se ha especificado ningún negocio ni dispositivo.");
+        return;
+    }
 
     try {
+        let business = null;
+        let device = null;
 
-       let business = null;
-let device = null;
+        // ==========================================
+        // CARGAR MEDIANTE DISPOSITIVO
+        // ==========================================
 
-if (deviceCode) {
-    const { data: deviceData, error: deviceError } = await supabaseClient
-        .from("devices")
-        .select(`
-            id,
-            business_id,
-            name,
-            type,
-            code,
-            active,
-            businesses (*)
-        `)
-        .eq("code", deviceCode)
-        .eq("active", true)
-        .single();
+        if (deviceCode) {
 
-    if (deviceError) {
-        console.error("Error cargando dispositivo:", deviceError);
-        mostrarError("Dispositivo no encontrado.");
-        return;
-    }
+            const { data: deviceData, error: deviceError } = await supabaseClient
+                .from("devices")
+                .select(`
+                    id,
+                    business_id,
+                    name,
+                    type,
+                    code,
+                    active,
+                    businesses (*)
+                `)
+                .eq("code", deviceCode)
+                .eq("active", true)
+                .single();
 
-    if (!deviceData || !deviceData.businesses || !deviceData.businesses.active) {
-        mostrarError("El dispositivo no está asociado a un negocio activo.");
-        return;
-    }
+            if (deviceError) {
+                console.error("Error cargando dispositivo:", deviceError);
+                mostrarError("No se ha podido cargar el dispositivo.");
+                return;
+            }
 
-    device = deviceData;
-    business = deviceData.businesses;
+            if (!deviceData) {
+                mostrarError("Dispositivo no encontrado.");
+                return;
+            }
 
-} else {
+            if (!deviceData.businesses) {
+                mostrarError("El dispositivo no está asociado a ningún negocio.");
+                return;
+            }
 
-    const { data: businessData, error: businessError } = await supabaseClient
-        .from("businesses")
-        .select("*")
-        .eq("slug", cliente)
-        .eq("active", true)
-        .single();
+            if (!deviceData.businesses.active) {
+                mostrarError("El negocio asociado no está activo.");
+                return;
+            }
 
-    if (businessError) {
-        console.error("Error cargando negocio:", businessError);
-        mostrarError("No se ha podido cargar el negocio.");
-        return;
-    }
+            device = deviceData;
+            business = deviceData.businesses;
 
-    if (!businessData) {
-        mostrarError("Negocio no encontrado.");
-        return;
-    }
-
-    business = businessData;
-}
-
-        if (error) {
-            console.error("Error cargando negocio:", error);
-            mostrarError("No se ha podido cargar el negocio.");
-            return;
         }
 
-        if (!business) {
-            mostrarError("Negocio no encontrado.");
-            return;
+        // ==========================================
+        // CARGAR MEDIANTE SLUG DEL NEGOCIO
+        // ==========================================
+
+        else {
+
+            const { data: businessData, error: businessError } = await supabaseClient
+                .from("businesses")
+                .select("*")
+                .eq("slug", cliente)
+                .eq("active", true)
+                .single();
+
+            if (businessError) {
+                console.error("Error cargando negocio:", businessError);
+                mostrarError("No se ha podido cargar el negocio.");
+                return;
+            }
+
+            if (!businessData) {
+                mostrarError("Negocio no encontrado.");
+                return;
+            }
+
+            business = businessData;
         }
 
-      console.log("NEGOCIO CARGADO:", business);
+        // ==========================================
+        // NEGOCIO CARGADO CORRECTAMENTE
+        // ==========================================
 
-cargarNegocio(business);
+        console.log("NEGOCIO CARGADO:", business);
 
-await registrarVisita(business.id, device ? device.id : null);
+        if (device) {
+            console.log("DISPOSITIVO:", device);
+        }
 
-await cargarHorario(business.id);
-await cargarPromocion(business.id);
+        cargarNegocio(business);
+
+        await registrarVisita(
+            business.id,
+            device ? device.id : null
+        );
+
+        await cargarHorario(business.id);
+        await cargarPromocion(business.id);
 
     } catch (error) {
 
         console.error("Error inesperado:", error);
-
-        mostrarError(
-            "Ha ocurrido un error inesperado."
-        );
+        mostrarError("Ha ocurrido un error inesperado.");
 
     }
-
 });
-
 
 function cargarNegocio(business) {
 
