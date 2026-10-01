@@ -1,203 +1,190 @@
-document.addEventListener("DOMContentLoaded", async () => {
+<!DOCTYPE html>
+<html lang="es">
 
-    const params = new URLSearchParams(window.location.search);
-    const cliente = params.get("cliente");
+<head>
 
-    if (!cliente) {
-        mostrarError("No se ha especificado ningún negocio.");
-        return;
-    }
+    <meta charset="UTF-8">
 
-    try {
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-        const { data: business, error } = await supabaseClient
-            .from("businesses")
-            .select("*")
-            .eq("slug", cliente)
-            .eq("active", true)
-            .single();
+    <title>Perfil digital</title>
 
-        if (error) {
-            console.error("Error cargando negocio:", error);
-            mostrarError("No se ha podido cargar el negocio.");
-            return;
-        }
+    <link
+        rel="stylesheet"
+        href="../css/profile.css"
+    >
 
-        if (!business) {
-            mostrarError("Negocio no encontrado.");
-            return;
-        }
+</head>
 
-        cargarNegocio(business);
+<body>
 
-    } catch (error) {
+    <main class="profile-page">
 
-        console.error("Error inesperado:", error);
-        mostrarError("Ha ocurrido un error inesperado.");
+        <section class="profile-card">
 
-    }
-});
-
-
-function cargarNegocio(business) {
-
-    console.log("NEGOCIO CARGADO:", business);
-
-    document.title = business.name || "Soluciones Digitales";
-
-    const nombre = document.querySelector("[data-business-name]");
-    const descripcion = document.querySelector("[data-business-description]");
-    const direccion = document.querySelector("[data-business-address]");
-
-    if (nombre) {
-        nombre.textContent = business.name || "";
-    }
-
-    if (descripcion) {
-        descripcion.textContent = business.description || "";
-    }
-
-    if (direccion) {
-        direccion.textContent = [
-            business.address,
-            business.city,
-            business.province
-        ]
-        .filter(Boolean)
-        .join(" · ");
-    }
-
-    // Colores
-    if (business.primary_color) {
-        document.documentElement.style.setProperty(
-            "--primary-color",
-            business.primary_color
-        );
-    }
-
-    if (business.secondary_color) {
-        document.documentElement.style.setProperty(
-            "--secondary-color",
-            business.secondary_color
-        );
-    }
-
-    // Enlaces
-    crearBoton(
-        "Google",
-        business.google_url,
-        "google"
-    );
-
-    crearBoton(
-        "Instagram",
-        business.instagram_url,
-        "instagram"
-    );
-
-    crearBoton(
-        "WhatsApp",
-        business.whatsapp,
-        "whatsapp"
-    );
-
-    crearBoton(
-        "Web",
-        business.website,
-        "web"
-    );
-
-    cargarPromocion(business.id);
-}
-
-
-function crearBoton(texto, url, tipo) {
-
-    if (!url) return;
-
-    const contenedor = document.querySelector(
-        "[data-business-links]"
-    );
-
-    if (!contenedor) return;
-
-    const boton = document.createElement("a");
-
-    boton.href = url;
-    boton.target = "_blank";
-    boton.rel = "noopener noreferrer";
-
-    boton.className = "profile-button";
-    boton.dataset.type = tipo;
-
-    boton.textContent = texto;
-
-    contenedor.appendChild(boton);
-}
-
-
-async function cargarPromocion(businessId) {
-
-    const { data, error } = await supabaseClient
-        .from("promotions")
-        .select("*")
-        .eq("business_id", businessId)
-        .eq("active", true)
-        .limit(1)
-        .maybeSingle();
-
-    if (error) {
-        console.error(
-            "Error cargando promoción:",
-            error
-        );
-        return;
-    }
-
-    if (!data) return;
-
-    const promo = document.querySelector(
-        "[data-promotion]"
-    );
-
-    if (!promo) return;
-
-    promo.style.display = "block";
-
-    const titulo = promo.querySelector(
-        "[data-promotion-title]"
-    );
-
-    const descripcion = promo.querySelector(
-        "[data-promotion-description]"
-    );
-
-    if (titulo) {
-        titulo.textContent = data.title || "";
-    }
-
-    if (descripcion) {
-        descripcion.textContent = data.description || "";
-    }
-}
-
-
-function mostrarError(mensaje) {
-
-    document.body.innerHTML = `
-        <main style="
-            min-height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:30px;
-            font-family:Arial,sans-serif;
-            text-align:center;
-        ">
-            <div>
-                <h1>Soluciones Digitales</h1>
-                <p>${mensaje}</p>
+            <!-- LOGO -->
+            <div class="profile-logo">
+                <span>SD</span>
             </div>
-        </main>
-    `;
-}
+
+            <!-- TIPO -->
+            <div class="profile-label">
+                PERFIL DIGITAL
+            </div>
+
+            <!-- NEGOCIO -->
+            <h1 data-business-name>
+                Cargando negocio...
+            </h1>
+
+            <p
+                class="profile-description"
+                data-business-description
+            >
+            </p>
+
+
+            <!-- PROMOCIÓN -->
+            <section
+                class="promotion-card"
+                data-promotion
+                style="display:none;"
+            >
+
+                <div class="promotion-label">
+                    PROMOCIÓN
+                </div>
+
+                <h2 data-promotion-title></h2>
+
+                <p data-promotion-description></p>
+
+            </section>
+
+
+            <!-- ENLACES -->
+            <div
+                class="profile-links"
+                data-business-links
+            >
+            </div>
+
+
+            <!-- HORARIO -->
+            <section class="info-card">
+
+                <div class="info-title">
+                    HORARIO
+                </div>
+
+                <div
+                    class="info-value"
+                    data-business-hours
+                >
+                    —
+                </div>
+
+            </section>
+
+
+            <!-- DIRECCIÓN -->
+            <section class="info-card">
+
+                <div class="info-title">
+                    DIRECCIÓN
+                </div>
+
+                <div
+                    class="info-value"
+                    data-business-address
+                >
+                    —
+                </div>
+
+            </section>
+
+
+            <!-- COMPARTIR -->
+            <button
+                class="share-button"
+                type="button"
+                onclick="compartirPerfil()"
+            >
+                Compartir perfil
+            </button>
+
+
+            <!-- FOOTER -->
+            <div class="profile-footer">
+
+                Powered by
+                <strong>Soluciones Digitales</strong>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../js/supabase.js"></script>
+
+    <script src="../js/profile.js"></script>
+
+
+    <!-- COMPARTIR -->
+
+    <script>
+
+        async function compartirPerfil() {
+
+            const url = window.location.href;
+
+            if (navigator.share) {
+
+                try {
+
+                    await navigator.share({
+                        title: document.title,
+                        url: url
+                    });
+
+                } catch (error) {
+
+                    console.log("Compartir cancelado");
+
+                }
+
+            } else {
+
+                try {
+
+                    await navigator.clipboard.writeText(url);
+
+                    alert("Enlace copiado al portapapeles");
+
+                } catch (error) {
+
+                    prompt(
+                        "Copia este enlace:",
+                        url
+                    );
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
