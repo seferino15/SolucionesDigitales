@@ -1,11 +1,190 @@
-<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Perfil digital</title><link rel="stylesheet" href="../css/profile.css"></head>
-<body><main class="profile-shell"><section class="profile-card">
-<div class="profile-logo" id="logo">SD</div><p class="eyebrow">PERFIL DIGITAL</p><h1 id="businessName">Cargando negocio...</h1><p id="businessDescription" class="description"></p>
-<div id="buttons" class="buttons"></div>
-<div id="promo" class="promo hidden"><span class="promo-label">PROMOCIÓN</span><h2 id="promoTitle"></h2><p id="promoText"></p></div>
-<div class="info"><div><span>HORARIO</span><p id="hours">—</p></div><div><span>DIRECCIÓN</span><p id="address">—</p></div></div>
-<button id="share" class="share">Compartir perfil</button><small>Powered by Soluciones Digitales</small>
-</section></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-<script src="../js/profile.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Perfil digital</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/profile.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="profile-page">
+
+        <section class="profile-card">
+
+            <!-- LOGO -->
+            <div class="profile-logo">
+                <span>SD</span>
+            </div>
+
+            <!-- TIPO -->
+            <div class="profile-label">
+                PERFIL DIGITAL
+            </div>
+
+            <!-- NEGOCIO -->
+            <h1 data-business-name>
+                Cargando negocio...
+            </h1>
+
+            <p
+                class="profile-description"
+                data-business-description
+            >
+            </p>
+
+
+            <!-- PROMOCIÓN -->
+            <section
+                class="promotion-card"
+                data-promotion
+                style="display:none;"
+            >
+
+                <div class="promotion-label">
+                    PROMOCIÓN
+                </div>
+
+                <h2 data-promotion-title></h2>
+
+                <p data-promotion-description></p>
+
+            </section>
+
+
+            <!-- ENLACES -->
+            <div
+                class="profile-links"
+                data-business-links
+            >
+            </div>
+
+
+            <!-- HORARIO -->
+            <section class="info-card">
+
+                <div class="info-title">
+                    HORARIO
+                </div>
+
+                <div
+                    class="info-value"
+                    data-business-hours
+                >
+                    —
+                </div>
+
+            </section>
+
+
+            <!-- DIRECCIÓN -->
+            <section class="info-card">
+
+                <div class="info-title">
+                    DIRECCIÓN
+                </div>
+
+                <div
+                    class="info-value"
+                    data-business-address
+                >
+                    —
+                </div>
+
+            </section>
+
+
+            <!-- COMPARTIR -->
+            <button
+                class="share-button"
+                type="button"
+                onclick="compartirPerfil()"
+            >
+                Compartir perfil
+            </button>
+
+
+            <!-- FOOTER -->
+            <div class="profile-footer">
+
+                Powered by
+                <strong>Soluciones Digitales</strong>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../js/supabase.js"></script>
+
+    <script src="../js/profile.js"></script>
+
+
+    <!-- COMPARTIR -->
+
+    <script>
+
+        async function compartirPerfil() {
+
+            const url = window.location.href;
+
+            if (navigator.share) {
+
+                try {
+
+                    await navigator.share({
+                        title: document.title,
+                        url: url
+                    });
+
+                } catch (error) {
+
+                    console.log("Compartir cancelado");
+
+                }
+
+            } else {
+
+                try {
+
+                    await navigator.clipboard.writeText(url);
+
+                    alert("Enlace copiado al portapapeles");
+
+                } catch (error) {
+
+                    prompt(
+                        "Copia este enlace:",
+                        url
+                    );
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
