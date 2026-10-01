@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-document.addEventListener("DOMContentLoaded", async () => {
+
     const params = new URLSearchParams(window.location.search);
 
     const cliente = params.get("cliente");
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
+
         let business = null;
         let device = null;
 
@@ -20,24 +21,32 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (deviceCode) {
 
-            const { data: deviceData, error: deviceError } = await supabaseClient
-                .from("devices")
-                .select(`
-                    id,
-                    business_id,
-                    name,
-                    type,
-                    code,
-                    active,
-                    businesses (*)
-                `)
-                .eq("code", deviceCode)
-                .eq("active", true)
-                .single();
+            const { data: deviceData, error: deviceError } =
+                await supabaseClient
+                    .from("devices")
+                    .select(`
+                        id,
+                        business_id,
+                        name,
+                        type,
+                        code,
+                        active,
+                        businesses (*)
+                    `)
+                    .eq("code", deviceCode)
+                    .eq("active", true)
+                    .single();
 
             if (deviceError) {
-                console.error("Error cargando dispositivo:", deviceError);
-                mostrarError("No se ha podido cargar el dispositivo.");
+                console.error(
+                    "Error cargando dispositivo:",
+                    deviceError
+                );
+
+                mostrarError(
+                    "No se ha podido cargar el dispositivo."
+                );
+
                 return;
             }
 
@@ -47,12 +56,18 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             if (!deviceData.businesses) {
-                mostrarError("El dispositivo no está asociado a ningún negocio.");
+                mostrarError(
+                    "El dispositivo no está asociado a ningún negocio."
+                );
+
                 return;
             }
 
             if (!deviceData.businesses.active) {
-                mostrarError("El negocio asociado no está activo.");
+                mostrarError(
+                    "El negocio asociado no está activo."
+                );
+
                 return;
             }
 
@@ -62,12 +77,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         // ==========================================
-        // CARGAR MEDIANTE SLUG DEL NEGOCIO
+        // CARGAR MEDIANTE SLUG
         // ==========================================
 
         else {
 
-            const { data: businessData, error: businessError } = await supabaseClient
+            const {
+                data: businessData,
+                error: businessError
+            } = await supabaseClient
                 .from("businesses")
                 .select("*")
                 .eq("slug", cliente)
@@ -75,8 +93,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                 .single();
 
             if (businessError) {
-                console.error("Error cargando negocio:", businessError);
-                mostrarError("No se ha podido cargar el negocio.");
+
+                console.error(
+                    "Error cargando negocio:",
+                    businessError
+                );
+
+                mostrarError(
+                    "No se ha podido cargar el negocio."
+                );
+
                 return;
             }
 
@@ -89,13 +115,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         // ==========================================
-        // NEGOCIO CARGADO CORRECTAMENTE
+        // NEGOCIO CARGADO
         // ==========================================
 
-        console.log("NEGOCIO CARGADO:", business);
+        console.log(
+            "NEGOCIO CARGADO:",
+            business
+        );
 
         if (device) {
-            console.log("DISPOSITIVO:", device);
+            console.log(
+                "DISPOSITIVO:",
+                device
+            );
         }
 
         cargarNegocio(business);
@@ -105,53 +137,73 @@ document.addEventListener("DOMContentLoaded", async () => {
             device ? device.id : null
         );
 
-        await cargarHorario(business.id);
-        await cargarPromocion(business.id);
+        await cargarHorario(
+            business.id
+        );
+
+        await cargarPromocion(
+            business.id
+        );
 
     } catch (error) {
 
-        console.error("Error inesperado:", error);
-        mostrarError("Ha ocurrido un error inesperado.");
+        console.error(
+            "Error inesperado:",
+            error
+        );
 
+        mostrarError(
+            "Ha ocurrido un error inesperado."
+        );
     }
+
 });
+
+
+// ==================================================
+// CARGAR NEGOCIO
+// ==================================================
 
 function cargarNegocio(business) {
 
     document.title =
         business.name || "Soluciones Digitales";
 
-// =========================
-// LOGO
-// =========================
 
-const logo =
-    document.querySelector(
-        "[data-business-logo]"
-    );
+    // ==========================================
+    // LOGO
+    // ==========================================
 
-if (logo && business.logo_url) {
+    const logo =
+        document.querySelector(
+            "[data-business-logo]"
+        );
 
-    logo.innerHTML = "";
+    if (logo && business.logo_url) {
 
-    const imagen =
-        document.createElement("img");
+        logo.innerHTML = "";
 
-    imagen.src =
-        business.logo_url;
+        const imagen =
+            document.createElement("img");
 
-    imagen.alt =
-        business.name || "Logo";
+        imagen.src =
+            business.logo_url;
 
-    imagen.loading =
-        "eager";
+        imagen.alt =
+            business.name || "Logo";
 
-    logo.appendChild(imagen);
+        imagen.loading =
+            "eager";
 
-}
-    // =========================
+        logo.appendChild(
+            imagen
+        );
+    }
+
+
+    // ==========================================
     // NOMBRE
-    // =========================
+    // ==========================================
 
     const nombre =
         document.querySelector(
@@ -159,14 +211,15 @@ if (logo && business.logo_url) {
         );
 
     if (nombre) {
+
         nombre.textContent =
             business.name || "";
     }
 
 
-    // =========================
+    // ==========================================
     // DESCRIPCIÓN
-    // =========================
+    // ==========================================
 
     const descripcion =
         document.querySelector(
@@ -174,14 +227,15 @@ if (logo && business.logo_url) {
         );
 
     if (descripcion) {
+
         descripcion.textContent =
             business.description || "";
     }
 
 
-    // =========================
+    // ==========================================
     // DIRECCIÓN
-    // =========================
+    // ==========================================
 
     const direccion =
         document.querySelector(
@@ -198,13 +252,12 @@ if (logo && business.logo_url) {
 
         direccion.textContent =
             partes.join(" · ");
-
     }
 
 
-    // =========================
+    // ==========================================
     // COLORES
-    // =========================
+    // ==========================================
 
     if (business.primary_color) {
 
@@ -212,7 +265,6 @@ if (logo && business.logo_url) {
             "--primary-color",
             business.primary_color
         );
-
     }
 
     if (business.secondary_color) {
@@ -221,13 +273,12 @@ if (logo && business.logo_url) {
             "--secondary-color",
             business.secondary_color
         );
-
     }
 
 
-    // =========================
+    // ==========================================
     // ENLACES
-    // =========================
+    // ==========================================
 
     crearBoton(
         "⭐ Google",
@@ -265,8 +316,6 @@ if (logo && business.logo_url) {
         "web"
     );
 
-    // MENÚ
-
     crearBoton(
         "🍽️ Ver menú",
         business.menu_url,
@@ -276,50 +325,94 @@ if (logo && business.logo_url) {
 }
 
 
-function crearBoton(texto, url, tipo) {
+// ==================================================
+// CREAR BOTÓN
+// ==================================================
+
+function crearBoton(
+    texto,
+    url,
+    tipo
+) {
+
     if (!url) return;
 
-    const contenedor = document.querySelector("[data-business-links]");
+    const contenedor =
+        document.querySelector(
+            "[data-business-links]"
+        );
+
     if (!contenedor) return;
 
-    const boton = document.createElement("a");
+    const boton =
+        document.createElement("a");
 
-    boton.href = url;
-    boton.target = "_blank";
-    boton.rel = "noopener noreferrer";
+    boton.href =
+        url;
 
-    boton.className = "profile-button";
-    boton.dataset.type = tipo;
-    boton.textContent = texto;
+    boton.target =
+        "_blank";
 
-    boton.addEventListener("click", () => {
-        registrarClick(tipo, url);
-    });
+    boton.rel =
+        "noopener noreferrer";
 
-    contenedor.appendChild(boton);
+    boton.className =
+        "profile-button";
+
+    boton.dataset.type =
+        tipo;
+
+    boton.textContent =
+        texto;
+
+
+    boton.addEventListener(
+        "click",
+        () => {
+
+            registrarClick(
+                tipo,
+                url
+            );
+
+        }
+    );
+
+
+    contenedor.appendChild(
+        boton
+    );
 }
 
 
-async function cargarHorario(businessId) {
+// ==================================================
+// HORARIO
+// ==================================================
 
-    const { data, error } =
-        await supabaseClient
+async function cargarHorario(
+    businessId
+) {
 
-            .from("business_hours")
+    const {
+        data,
+        error
+    } = await supabaseClient
 
-            .select("*")
+        .from("business_hours")
 
-            .eq(
-                "business_id",
-                businessId
-            )
+        .select("*")
 
-            .order(
-                "day_of_week",
-                {
-                    ascending: true
-                }
-            );
+        .eq(
+            "business_id",
+            businessId
+        )
+
+        .order(
+            "day_of_week",
+            {
+                ascending: true
+            }
+        );
 
 
     if (error) {
@@ -330,7 +423,6 @@ async function cargarHorario(businessId) {
         );
 
         return;
-
     }
 
 
@@ -347,43 +439,46 @@ async function cargarHorario(businessId) {
 
         {
             numero: 1,
-            nombre: "Lunes   "
+            nombre: "Lunes"
         },
 
         {
             numero: 2,
-            nombre: "Martes   "
+            nombre: "Martes"
         },
 
         {
             numero: 3,
-            nombre: "Miércoles   "
+            nombre: "Miércoles"
         },
 
         {
             numero: 4,
-            nombre: "Jueves   "
+            nombre: "Jueves"
         },
 
         {
             numero: 5,
-            nombre: "Viernes   "
+            nombre: "Viernes"
         },
 
         {
             numero: 6,
-            nombre: "Sábado   "
+            nombre: "Sábado"
         },
 
         {
             numero: 0,
-            nombre: "Domingo   "
+            nombre: "Domingo"
         }
 
     ];
 
 
-    if (!data || data.length === 0) {
+    if (
+        !data ||
+        data.length === 0
+    ) {
 
         contenedor.innerHTML = `
             <div class="hours-empty">
@@ -392,7 +487,6 @@ async function cargarHorario(businessId) {
         `;
 
         return;
-
     }
 
 
@@ -400,135 +494,164 @@ async function cargarHorario(businessId) {
         new Date().getDay();
 
 
-    contenedor.innerHTML = "";
+    contenedor.innerHTML =
+        "";
 
 
-    dias.forEach(dia => {
+    dias.forEach(
+        dia => {
 
-        const horario =
-            data.find(
-                item =>
-                    Number(item.day_of_week) ===
-                    dia.numero
-            );
-
-
-        const fila =
-            document.createElement("div");
-
-
-        fila.className =
-            "hours-row";
-
-
-        if (dia.numero === hoy) {
-
-            fila.classList.add(
-                "today"
-            );
-
-        }
-
-
-        const nombre =
-            document.createElement("span");
-
-
-        nombre.className =
-            "hours-day";
-
-
-        nombre.textContent =
-            dia.nombre;
-
-
-        const hora =
-            document.createElement("span");
-
-
-        hora.className =
-            "hours-time";
-
-
-        if (!horario) {
-
-            hora.textContent =
-                "No disponible";
-
-        }
-
-        else if (horario.closed) {
-
-            hora.textContent =
-                "Cerrado";
-
-            fila.classList.add(
-                "closed"
-            );
-
-        }
-
-        else {
-
-            const apertura =
-                formatearHora(
-                    horario.open_time
-                );
-
-            const cierre =
-                formatearHora(
-                    horario.close_time
+            const horario =
+                data.find(
+                    item =>
+                        Number(
+                            item.day_of_week
+                        ) ===
+                        dia.numero
                 );
 
 
-            hora.textContent =
-                `${apertura} – ${cierre}`;
+            const fila =
+                document.createElement(
+                    "div"
+                );
+
+            fila.className =
+                "hours-row";
+
+
+            if (
+                dia.numero === hoy
+            ) {
+
+                fila.classList.add(
+                    "today"
+                );
+            }
+
+
+            const nombre =
+                document.createElement(
+                    "span"
+                );
+
+            nombre.className =
+                "hours-day";
+
+            nombre.textContent =
+                dia.nombre;
+
+
+            const hora =
+                document.createElement(
+                    "span"
+                );
+
+            hora.className =
+                "hours-time";
+
+
+            if (!horario) {
+
+                hora.textContent =
+                    "No disponible";
+
+            }
+
+            else if (
+                horario.closed
+            ) {
+
+                hora.textContent =
+                    "Cerrado";
+
+                fila.classList.add(
+                    "closed"
+                );
+
+            }
+
+            else {
+
+                const apertura =
+                    formatearHora(
+                        horario.open_time
+                    );
+
+                const cierre =
+                    formatearHora(
+                        horario.close_time
+                    );
+
+                hora.textContent =
+                    `${apertura} – ${cierre}`;
+            }
+
+
+            fila.appendChild(
+                nombre
+            );
+
+            fila.appendChild(
+                hora
+            );
+
+            contenedor.appendChild(
+                fila
+            );
 
         }
-
-
-        fila.appendChild(nombre);
-
-        fila.appendChild(hora);
-
-        contenedor.appendChild(fila);
-
-    });
-
+    );
 }
 
 
-function formatearHora(hora) {
+// ==================================================
+// FORMATEAR HORA
+// ==================================================
+
+function formatearHora(
+    hora
+) {
 
     if (!hora) return "";
 
-    return hora.substring(0, 5);
-
+    return hora.substring(
+        0,
+        5
+    );
 }
 
 
-async function cargarPromocion(businessId) {
+// ==================================================
+// PROMOCIÓN
+// ==================================================
 
-    const { data, error } =
-        await supabaseClient
+async function cargarPromocion(
+    businessId
+) {
 
-            .from("promotions")
+    const {
+        data,
+        error
+    } = await supabaseClient
 
-            .select("*")
+        .from("promotions")
 
-            .eq(
-                "business_id",
-                businessId
-            )
+        .select("*")
 
-            .eq(
-                "active",
-                true
-            )
+        .eq(
+            "business_id",
+            businessId
+        )
 
-            .limit(1)
+        .eq(
+            "active",
+            true
+        )
 
-            .maybeSingle();
+        .limit(1)
+
+        .maybeSingle();
 
 
     if (error) {
@@ -539,7 +662,6 @@ async function cargarPromocion(businessId) {
         );
 
         return;
-
     }
 
 
@@ -575,7 +697,6 @@ async function cargarPromocion(businessId) {
 
         titulo.textContent =
             data.title || "";
-
     }
 
 
@@ -583,13 +704,288 @@ async function cargarPromocion(businessId) {
 
         descripcion.textContent =
             data.description || "";
-
     }
 
 }
 
 
-function mostrarError(mensaje) {
+// ==================================================
+// REGISTRAR VISITA
+// ==================================================
+
+async function registrarVisita(
+    businessId,
+    deviceId = null
+) {
+
+    try {
+
+        const {
+            error
+        } = await supabaseClient
+
+            .from("analytics")
+
+            .insert({
+
+                business_id:
+                    businessId,
+
+                device_id:
+                    deviceId,
+
+                event_type:
+                    "page_view",
+
+                target_url:
+                    window.location.href,
+
+                user_agent:
+                    navigator.userAgent,
+
+                referrer:
+                    document.referrer || null
+
+            });
+
+
+        if (error) {
+
+            console.error(
+                "Error registrando visita:",
+                error
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "VISITA REGISTRADA",
+            {
+                business_id:
+                    businessId,
+
+                device_id:
+                    deviceId
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Error inesperado registrando visita:",
+            error
+        );
+    }
+
+}
+
+
+// ==================================================
+// REGISTRAR CLICK
+// ==================================================
+
+async function registrarClick(
+    tipo,
+    url
+) {
+
+    try {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const cliente =
+            params.get("cliente");
+
+        const deviceCode =
+            params.get("d");
+
+
+        let businessId =
+            null;
+
+        let deviceId =
+            null;
+
+
+        // ==========================================
+        // SI VIENE DESDE UN DISPOSITIVO
+        // ==========================================
+
+        if (deviceCode) {
+
+            const {
+                data: device,
+                error: deviceError
+            } = await supabaseClient
+
+                .from("devices")
+
+                .select(
+                    "id, business_id"
+                )
+
+                .eq(
+                    "code",
+                    deviceCode
+                )
+
+                .eq(
+                    "active",
+                    true
+                )
+
+                .single();
+
+
+            if (
+                deviceError ||
+                !device
+            ) {
+
+                console.error(
+                    "No se pudo identificar el dispositivo:",
+                    deviceError
+                );
+
+                return;
+            }
+
+
+            businessId =
+                device.business_id;
+
+            deviceId =
+                device.id;
+
+        }
+
+
+        // ==========================================
+        // SI VIENE POR CLIENTE
+        // ==========================================
+
+        else if (cliente) {
+
+            const {
+                data: business,
+                error: businessError
+            } = await supabaseClient
+
+                .from("businesses")
+
+                .select(
+                    "id"
+                )
+
+                .eq(
+                    "slug",
+                    cliente
+                )
+
+                .eq(
+                    "active",
+                    true
+                )
+
+                .single();
+
+
+            if (
+                businessError ||
+                !business
+            ) {
+
+                console.error(
+                    "No se pudo identificar el negocio:",
+                    businessError
+                );
+
+                return;
+            }
+
+
+            businessId =
+                business.id;
+        }
+
+
+        if (!businessId) {
+            return;
+        }
+
+
+        // ==========================================
+        // GUARDAR CLICK
+        // ==========================================
+
+        const {
+            error
+        } = await supabaseClient
+
+            .from("analytics")
+
+            .insert({
+
+                business_id:
+                    businessId,
+
+                device_id:
+                    deviceId,
+
+                event_type:
+                    "click",
+
+                target_url:
+                    url,
+
+                user_agent:
+                    navigator.userAgent,
+
+                referrer:
+                    document.referrer || null
+
+            });
+
+
+        if (error) {
+
+            console.error(
+                "Error registrando clic:",
+                error
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "CLICK REGISTRADO:",
+            tipo
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Error inesperado registrando clic:",
+            error
+        );
+    }
+
+}
+
+
+// ==================================================
+// MOSTRAR ERROR
+// ==================================================
+
+function mostrarError(
+    mensaje
+) {
 
     document.body.innerHTML = `
 
@@ -618,71 +1014,4 @@ function mostrarError(mensaje) {
         </main>
 
     `;
-
-}
-async function registrarVisita(businessId, deviceId = null) {
-    try {
-        const { error } = await supabaseClient
-            .from("analytics")
-            .insert({
-                business_id: businessId,
-                device_id: deviceId,
-                event_type: "page_view",
-                target_url: window.location.href,
-                user_agent: navigator.userAgent,
-                referrer: document.referrer || null
-            });
-
-        if (error) {
-            console.error("Error registrando visita:", error);
-            return;
-        }
-
-        console.log("VISITA REGISTRADA", {
-            business_id: businessId,
-            device_id: deviceId
-        });
-
-    } catch (error) {
-        console.error("Error inesperado registrando visita:", error);
-    }
-}
-async function registrarClick(tipo, url) {
-    try {
-        const params = new URLSearchParams(window.location.search);
-        const cliente = params.get("cliente");
-
-        if (!cliente) return;
-
-        const { data: business, error: businessError } = await supabaseClient
-            .from("businesses")
-            .select("id")
-            .eq("slug", cliente)
-            .eq("active", true)
-            .single();
-
-        if (businessError || !business) {
-            console.error("No se pudo identificar el negocio:", businessError);
-            return;
-        }
-
-        const { error } = await supabaseClient
-            .from("analytics")
-            .insert({
-                business_id: business.id,
-                event_type: "click",
-                target_url: url,
-                user_agent: navigator.userAgent,
-                referrer: document.referrer || null
-            });
-
-        if (error) {
-            console.error("Error registrando clic:", error);
-            return;
-        }
-
-        console.log("CLICK REGISTRADO:", tipo);
-    } catch (error) {
-        console.error("Error inesperado registrando clic:", error);
-    }
 }
