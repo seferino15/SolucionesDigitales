@@ -1,0 +1,1 @@
+console.log("Soluciones Digitales: plataforma inicial cargada.");
