@@ -1,21 +1,72 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-    const params = new URLSearchParams(window.location.search);
-    const cliente = params.get("cliente");
+const params = new URLSearchParams(window.location.search);
 
-    if (!cliente) {
-        mostrarError("No se ha especificado ningún negocio.");
-        return;
-    }
+const cliente = params.get("cliente");
+const deviceCode = params.get("d");
+
+if (!cliente && !deviceCode) {
+    mostrarError("No se ha especificado ningún negocio ni dispositivo.");
+    return;
+}
 
     try {
 
-        const { data: business, error } = await supabaseClient
-            .from("businesses")
-            .select("*")
-            .eq("slug", cliente)
-            .eq("active", true)
-            .single();
+       let business = null;
+let device = null;
+
+if (deviceCode) {
+    const { data: deviceData, error: deviceError } = await supabaseClient
+        .from("devices")
+        .select(`
+            id,
+            business_id,
+            name,
+            type,
+            code,
+            active,
+            businesses (*)
+        `)
+        .eq("code", deviceCode)
+        .eq("active", true)
+        .single();
+
+    if (deviceError) {
+        console.error("Error cargando dispositivo:", deviceError);
+        mostrarError("Dispositivo no encontrado.");
+        return;
+    }
+
+    if (!deviceData || !deviceData.businesses || !deviceData.businesses.active) {
+        mostrarError("El dispositivo no está asociado a un negocio activo.");
+        return;
+    }
+
+    device = deviceData;
+    business = deviceData.businesses;
+
+} else {
+
+    const { data: businessData, error: businessError } = await supabaseClient
+        .from("businesses")
+        .select("*")
+        .eq("slug", cliente)
+        .eq("active", true)
+        .single();
+
+    if (businessError) {
+        console.error("Error cargando negocio:", businessError);
+        mostrarError("No se ha podido cargar el negocio.");
+        return;
+    }
+
+    if (!businessData) {
+        mostrarError("Negocio no encontrado.");
+        return;
+    }
+
+    business = businessData;
+}
 
         if (error) {
             console.error("Error cargando negocio:", error);
@@ -32,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 cargarNegocio(business);
 
-await registrarVisita(business.id);
+await registrarVisita(business.id, device ? device.id : null);
 
 await cargarHorario(business.id);
 await cargarPromocion(business.id);
@@ -554,12 +605,13 @@ function mostrarError(mensaje) {
     `;
 
 }
-async function registrarVisita(businessId) {
+async function registrarVisita(businessId, deviceId = null) {
     try {
         const { error } = await supabaseClient
             .from("analytics")
             .insert({
                 business_id: businessId,
+                device_id: deviceId,
                 event_type: "page_view",
                 target_url: window.location.href,
                 user_agent: navigator.userAgent,
@@ -571,7 +623,11 @@ async function registrarVisita(businessId) {
             return;
         }
 
-        console.log("VISITA REGISTRADA");
+        console.log("VISITA REGISTRADA", {
+            business_id: businessId,
+            device_id: deviceId
+        });
+
     } catch (error) {
         console.error("Error inesperado registrando visita:", error);
     }
