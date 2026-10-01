@@ -55,7 +55,9 @@ function cargarNegocio(business) {
         business.name || "Soluciones Digitales";
 
 
+    // =========================
     // NOMBRE
+    // =========================
 
     const nombre =
         document.querySelector(
@@ -63,14 +65,14 @@ function cargarNegocio(business) {
         );
 
     if (nombre) {
-
         nombre.textContent =
             business.name || "";
-
     }
 
 
+    // =========================
     // DESCRIPCIÓN
+    // =========================
 
     const descripcion =
         document.querySelector(
@@ -78,14 +80,14 @@ function cargarNegocio(business) {
         );
 
     if (descripcion) {
-
         descripcion.textContent =
             business.description || "";
-
     }
 
 
+    // =========================
     // DIRECCIÓN
+    // =========================
 
     const direccion =
         document.querySelector(
@@ -106,7 +108,9 @@ function cargarNegocio(business) {
     }
 
 
+    // =========================
     // COLORES
+    // =========================
 
     if (business.primary_color) {
 
@@ -127,30 +131,52 @@ function cargarNegocio(business) {
     }
 
 
+    // =========================
     // ENLACES
+    // =========================
 
     crearBoton(
-        "Google",
+        "⭐ Google",
         business.google_url,
         "google"
     );
 
     crearBoton(
-        "Instagram",
+        "📸 Instagram",
         business.instagram_url,
         "instagram"
     );
 
     crearBoton(
-        "WhatsApp",
+        "📘 Facebook",
+        business.facebook_url,
+        "facebook"
+    );
+
+    crearBoton(
+        "🎵 TikTok",
+        business.tiktok_url,
+        "tiktok"
+    );
+
+    crearBoton(
+        "💬 WhatsApp",
         business.whatsapp,
         "whatsapp"
     );
 
     crearBoton(
-        "Web",
+        "🌐 Web",
         business.website,
         "web"
+    );
+
+    // MENÚ
+
+    crearBoton(
+        "🍽️ Ver menú",
+        business.menu_url,
+        "menu"
     );
 
 }
@@ -239,7 +265,8 @@ async function cargarHorario(businessId) {
 
     if (!data || data.length === 0) {
 
-        elemento.textContent = "Consultar";
+        elemento.textContent =
+            "Consultar";
 
         return;
 
@@ -249,17 +276,11 @@ async function cargarHorario(businessId) {
     const dias = {
 
         0: "Domingo",
-
         1: "Lunes",
-
         2: "Martes",
-
         3: "Miércoles",
-
         4: "Jueves",
-
         5: "Viernes",
-
         6: "Sábado"
 
     };
@@ -286,12 +307,10 @@ async function cargarHorario(businessId) {
         } else {
 
             const apertura =
-                horarioHoy.open_time
-                || "";
+                horarioHoy.open_time || "";
 
             const cierre =
-                horarioHoy.close_time
-                || "";
+                horarioHoy.close_time || "";
 
             elemento.textContent =
                 `${apertura} – ${cierre}`;
