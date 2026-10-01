@@ -211,40 +211,26 @@ if (logo && business.logo_url) {
 
 
 function crearBoton(texto, url, tipo) {
-
     if (!url) return;
 
-    const contenedor =
-        document.querySelector(
-            "[data-business-links]"
-        );
-
+    const contenedor = document.querySelector("[data-business-links]");
     if (!contenedor) return;
 
-
-    const boton =
-        document.createElement("a");
-
+    const boton = document.createElement("a");
 
     boton.href = url;
-
     boton.target = "_blank";
+    boton.rel = "noopener noreferrer";
 
-    boton.rel =
-        "noopener noreferrer";
+    boton.className = "profile-button";
+    boton.dataset.type = tipo;
+    boton.textContent = texto;
 
-    boton.className =
-        "profile-button";
-
-    boton.dataset.type =
-        tipo;
-
-    boton.textContent =
-        texto;
-
+    boton.addEventListener("click", () => {
+        registrarClick(tipo, url);
+    });
 
     contenedor.appendChild(boton);
-
 }
 
 
@@ -588,5 +574,44 @@ async function registrarVisita(businessId) {
         console.log("VISITA REGISTRADA");
     } catch (error) {
         console.error("Error inesperado registrando visita:", error);
+    }
+}
+async function registrarClick(tipo, url) {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const cliente = params.get("cliente");
+
+        if (!cliente) return;
+
+        const { data: business, error: businessError } = await supabaseClient
+            .from("businesses")
+            .select("id")
+            .eq("slug", cliente)
+            .eq("active", true)
+            .single();
+
+        if (businessError || !business) {
+            console.error("No se pudo identificar el negocio:", businessError);
+            return;
+        }
+
+        const { error } = await supabaseClient
+            .from("analytics")
+            .insert({
+                business_id: business.id,
+                event_type: "click",
+                target_url: url,
+                user_agent: navigator.userAgent,
+                referrer: document.referrer || null
+            });
+
+        if (error) {
+            console.error("Error registrando clic:", error);
+            return;
+        }
+
+        console.log("CLICK REGISTRADO:", tipo);
+    } catch (error) {
+        console.error("Error inesperado registrando clic:", error);
     }
 }
