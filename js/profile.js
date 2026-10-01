@@ -568,3 +568,25 @@ function mostrarError(mensaje) {
     `;
 
 }
+async function registrarVisita(businessId) {
+    try {
+        const { error } = await supabaseClient
+            .from("analytics")
+            .insert({
+                business_id: businessId,
+                event_type: "page_view",
+                target_url: window.location.href,
+                user_agent: navigator.userAgent,
+                referrer: document.referrer || null
+            });
+
+        if (error) {
+            console.error("Error registrando visita:", error);
+            return;
+        }
+
+        console.log("VISITA REGISTRADA");
+    } catch (error) {
+        console.error("Error inesperado registrando visita:", error);
+    }
+}
