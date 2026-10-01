@@ -254,75 +254,175 @@ async function cargarHorario(businessId) {
     }
 
 
-    const elemento =
+    const contenedor =
         document.querySelector(
             "[data-business-hours]"
         );
 
 
-    if (!elemento) return;
+    if (!contenedor) return;
+
+
+    const dias = [
+
+        {
+            numero: 1,
+            nombre: "Lunes"
+        },
+
+        {
+            numero: 2,
+            nombre: "Martes"
+        },
+
+        {
+            numero: 3,
+            nombre: "Miércoles"
+        },
+
+        {
+            numero: 4,
+            nombre: "Jueves"
+        },
+
+        {
+            numero: 5,
+            nombre: "Viernes"
+        },
+
+        {
+            numero: 6,
+            nombre: "Sábado"
+        },
+
+        {
+            numero: 0,
+            nombre: "Domingo"
+        }
+
+    ];
 
 
     if (!data || data.length === 0) {
 
-        elemento.textContent =
-            "Consultar";
+        contenedor.innerHTML = `
+            <div class="hours-empty">
+                Horario no disponible
+            </div>
+        `;
 
         return;
 
     }
 
 
-    const dias = {
-
-        0: "Domingo",
-        1: "Lunes",
-        2: "Martes",
-        3: "Miércoles",
-        4: "Jueves",
-        5: "Viernes",
-        6: "Sábado"
-
-    };
-
-
     const hoy =
         new Date().getDay();
 
 
-    const horarioHoy =
-        data.find(
-            dia =>
-                Number(dia.day_of_week) === hoy
-        );
+    contenedor.innerHTML = "";
 
 
-    if (horarioHoy) {
+    dias.forEach(dia => {
 
-        if (horarioHoy.closed) {
+        const horario =
+            data.find(
+                item =>
+                    Number(item.day_of_week) ===
+                    dia.numero
+            );
 
-            elemento.textContent =
-                "Cerrado hoy";
 
-        } else {
+        const fila =
+            document.createElement("div");
+
+
+        fila.className =
+            "hours-row";
+
+
+        if (dia.numero === hoy) {
+
+            fila.classList.add(
+                "today"
+            );
+
+        }
+
+
+        const nombre =
+            document.createElement("span");
+
+
+        nombre.className =
+            "hours-day";
+
+
+        nombre.textContent =
+            dia.nombre;
+
+
+        const hora =
+            document.createElement("span");
+
+
+        hora.className =
+            "hours-time";
+
+
+        if (!horario) {
+
+            hora.textContent =
+                "No disponible";
+
+        }
+
+        else if (horario.closed) {
+
+            hora.textContent =
+                "Cerrado";
+
+            fila.classList.add(
+                "closed"
+            );
+
+        }
+
+        else {
 
             const apertura =
-                horarioHoy.open_time || "";
+                formatearHora(
+                    horario.open_time
+                );
 
             const cierre =
-                horarioHoy.close_time || "";
+                formatearHora(
+                    horario.close_time
+                );
 
-            elemento.textContent =
+
+            hora.textContent =
                 `${apertura} – ${cierre}`;
 
         }
 
-    } else {
 
-        elemento.textContent =
-            "Consultar horario";
+        fila.appendChild(nombre);
 
-    }
+        fila.appendChild(hora);
+
+        contenedor.appendChild(fila);
+
+    });
+
+}
+
+
+function formatearHora(hora) {
+
+    if (!hora) return "";
+
+    return hora.substring(0, 5);
 
 }
 
