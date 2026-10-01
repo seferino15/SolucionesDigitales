@@ -54,7 +54,34 @@ function cargarNegocio(business) {
     document.title =
         business.name || "Soluciones Digitales";
 
+// =========================
+// LOGO
+// =========================
 
+const logo =
+    document.querySelector(
+        "[data-business-logo]"
+    );
+
+if (logo && business.logo_url) {
+
+    logo.innerHTML = "";
+
+    const imagen =
+        document.createElement("img");
+
+    imagen.src =
+        business.logo_url;
+
+    imagen.alt =
+        business.name || "Logo";
+
+    imagen.loading =
+        "eager";
+
+    logo.appendChild(imagen);
+
+}
     // =========================
     // NOMBRE
     // =========================
