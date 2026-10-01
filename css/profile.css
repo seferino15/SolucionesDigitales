@@ -414,3 +414,77 @@ body {
     }
 
 }
+
+
+/* =========================
+   HORARIOS
+========================= */
+
+.hours-card {
+    padding-bottom: 12px;
+}
+
+.hours-list {
+    width: 100%;
+}
+
+.hours-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    min-height: 34px;
+
+    padding: 7px 9px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+
+    color: #374151;
+}
+
+.hours-row + .hours-row {
+    margin-top: 2px;
+}
+
+.hours-day {
+    font-weight: 600;
+}
+
+.hours-time {
+    color: #6b7280;
+
+    font-weight: 500;
+}
+
+.hours-row.today {
+    background: rgba(37, 99, 235, 0.08);
+
+    color: var(--secondary-color);
+}
+
+.hours-row.today .hours-day {
+    font-weight: 750;
+}
+
+.hours-row.today .hours-time {
+    color: var(--secondary-color);
+
+    font-weight: 700;
+}
+
+.hours-row.closed .hours-time {
+    color: #9ca3af;
+}
+
+.hours-loading,
+.hours-empty {
+    padding: 10px 0;
+
+    font-size: 12px;
+
+    color: #9ca3af;
+}
