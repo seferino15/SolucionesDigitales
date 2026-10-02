@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Acceso | Soluciones Digitales</title>
+    <title>Iniciar sesión | Soluciones Digitales</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -45,99 +38,94 @@
         }
 
         .login-card {
-            background: white;
+            background: #ffffff;
             border-radius: 24px;
-            padding: 32px;
-            box-shadow:
-                0 20px 50px rgba(15, 23, 42, 0.08);
-
+            padding: 34px 30px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
             border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
         .logo {
-            width: 64px;
-            height: 64px;
-
+            width: 58px;
+            height: 58px;
             margin: 0 auto 20px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            border-radius: 18px;
-
+            border-radius: 16px;
             background: #111827;
             color: white;
 
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
         }
 
         h1 {
             margin: 0;
             text-align: center;
-
-            font-size: 26px;
+            font-size: 25px;
             letter-spacing: -0.5px;
         }
 
         .subtitle {
             margin: 8px 0 28px;
-
             text-align: center;
-
             color: #6b7280;
             font-size: 14px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 17px;
         }
 
         label {
             display: block;
-
             margin-bottom: 7px;
-
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
+            color: #374151;
         }
 
         input {
             width: 100%;
+            height: 46px;
 
-            padding: 13px 14px;
+            padding: 0 14px;
 
             border: 1px solid #d1d5db;
-            border-radius: 10px;
+            border-radius: 12px;
 
-            font-size: 15px;
+            background: #ffffff;
+            color: #111827;
 
+            font-size: 14px;
             outline: none;
 
-            transition: border-color 0.2s,
-                        box-shadow 0.2s;
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
         }
 
         input:focus {
             border-color: #2563eb;
-
-            box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.10);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
         }
 
         button {
             width: 100%;
+            height: 48px;
+
+            margin-top: 8px;
 
             border: 0;
-            border-radius: 10px;
+            border-radius: 12px;
 
-            padding: 14px;
-
-            background: #111827;
+            background: #2563eb;
             color: white;
 
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
 
             cursor: pointer;
@@ -148,57 +136,59 @@
         }
 
         button:hover {
-            opacity: 0.92;
-        }
-
-        button:active {
-            transform: scale(0.99);
+            transform: translateY(-1px);
         }
 
         button:disabled {
             opacity: 0.6;
-            cursor: wait;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .message {
-            margin-top: 16px;
+            display: none;
 
-            padding: 12px;
+            margin-top: 18px;
+            padding: 12px 14px;
 
             border-radius: 10px;
 
             font-size: 13px;
-
-            display: none;
-
-            text-align: center;
-        }
-
-        .message.error {
-            display: block;
-
-            background: #fef2f2;
-            color: #b91c1c;
+            line-height: 1.4;
         }
 
         .message.success {
             display: block;
+            background: #ecfdf5;
+            color: #047857;
+        }
 
-            background: #f0fdf4;
-            color: #15803d;
+        .message.error {
+            display: block;
+            background: #fef2f2;
+            color: #b91c1c;
         }
 
         .footer {
-            margin-top: 20px;
-
+            margin-top: 22px;
             text-align: center;
 
             font-size: 12px;
             color: #9ca3af;
         }
 
-    </style>
+        @media (max-width: 480px) {
 
+            .login-card {
+                padding: 28px 22px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -211,12 +201,10 @@
                 SD
             </div>
 
-            <h1>
-                Acceso de clientes
-            </h1>
+            <h1>Bienvenido</h1>
 
             <p class="subtitle">
-                Gestiona tu negocio desde Soluciones Digitales
+                Accede al panel de tu negocio
             </p>
 
             <form id="loginForm">
@@ -231,6 +219,7 @@
                         type="email"
                         id="email"
                         placeholder="tu@email.com"
+                        autocomplete="email"
                         required
                     >
 
@@ -246,6 +235,7 @@
                         type="password"
                         id="password"
                         placeholder="Tu contraseña"
+                        autocomplete="current-password"
                         required
                     >
 
@@ -274,14 +264,12 @@
     </main>
 
 
-    <!-- SUPABASE -->
-
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- Configuración de Supabase -->
     <script src="../js/supabase.js"></script>
 
-
-    <!-- LOGIN -->
 
     <script>
 
@@ -297,9 +285,16 @@
 
         formulario.addEventListener(
             "submit",
-            async (event) => {
+            async function(event) {
 
                 event.preventDefault();
+
+                boton.disabled = true;
+                boton.textContent = "Iniciando sesión...";
+
+                mensaje.className = "message";
+                mensaje.textContent = "";
+
 
                 const email =
                     document
@@ -313,30 +308,28 @@
                         .value;
 
 
-                mensaje.className = "message";
-                mensaje.textContent = "";
-
-                boton.disabled = true;
-                boton.textContent = "Accediendo...";
-
-
                 try {
 
+                    /*
+                     * 1. Iniciar sesión
+                     */
+
                     const {
-                        data,
-                        error
+                        data: loginData,
+                        error: loginError
                     } =
-                        await supabaseClient.auth.signInWithPassword({
-                            email: email,
-                            password: password
-                        });
+                        await supabaseClient.auth
+                            .signInWithPassword({
+                                email: email,
+                                password: password
+                            });
 
 
-                    if (error) {
+                    if (loginError) {
 
                         console.error(
                             "Error de login:",
-                            error
+                            loginError
                         );
 
                         mensaje.className =
@@ -353,25 +346,32 @@
                     }
 
 
-                    console.log(
-                        "USUARIO AUTENTICADO:",
-                        data.user
-                    );
+                    /*
+                     * 2. Comprobar usuario
+                     */
+
+                    const usuario =
+                        loginData.user;
 
 
-                    mensaje.className =
-                        "message success";
+                    if (!usuario) {
 
-                    mensaje.textContent =
-                        "Acceso correcto. Cargando...";
+                        mensaje.className =
+                            "message error";
+
+                        mensaje.textContent =
+                            "No se ha podido identificar al usuario.";
+
+                        boton.disabled = false;
+                        boton.textContent =
+                            "Iniciar sesión";
+
+                        return;
+                    }
 
 
                     /*
-                     * De momento NO tenemos todavía
-                     * el panel terminado.
-                     *
-                     * Por eso hacemos una pequeña
-                     * comprobación del negocio.
+                     * 3. Buscar el negocio asociado
                      */
 
                     const {
@@ -386,13 +386,11 @@
                                 businesses (
                                     id,
                                     name,
-                                    slug
+                                    slug,
+                                    active
                                 )
                             `)
-                            .eq(
-                                "user_id",
-                                data.user.id
-                            )
+                            .eq("user_id", usuario.id)
                             .limit(1)
                             .maybeSingle();
 
@@ -400,7 +398,7 @@
                     if (membershipError) {
 
                         console.error(
-                            "Error comprobando negocio:",
+                            "Error buscando negocio:",
                             membershipError
                         );
 
@@ -408,9 +406,7 @@
                             "message error";
 
                         mensaje.textContent =
-                            "El usuario no tiene un negocio asociado.";
-
-                        await supabaseClient.auth.signOut();
+                            "No se ha podido comprobar el negocio asociado.";
 
                         boton.disabled = false;
                         boton.textContent =
@@ -420,15 +416,16 @@
                     }
 
 
-                    if (!membership) {
+                    if (
+                        !membership ||
+                        !membership.businesses
+                    ) {
 
                         mensaje.className =
                             "message error";
 
                         mensaje.textContent =
-                            "Este usuario no tiene ningún negocio asociado.";
-
-                        await supabaseClient.auth.signOut();
+                            "Tu usuario no está asociado a ningún negocio.";
 
                         boton.disabled = false;
                         boton.textContent =
@@ -438,17 +435,30 @@
                     }
 
 
-                    console.log(
-                        "NEGOCIO DEL USUARIO:",
-                        membership
-                    );
+                    /*
+                     * 4. Comprobar que el negocio está activo
+                     */
+
+                    if (
+                        membership.businesses.active === false
+                    ) {
+
+                        mensaje.className =
+                            "message error";
+
+                        mensaje.textContent =
+                            "El negocio asociado está desactivado.";
+
+                        boton.disabled = false;
+                        boton.textContent =
+                            "Iniciar sesión";
+
+                        return;
+                    }
 
 
                     /*
-                     * Todavía no redirigimos al panel.
-                     *
-                     * Primero comprobamos que Auth
-                     * y business_members funcionan.
+                     * 5. Login correcto
                      */
 
                     mensaje.className =
@@ -458,9 +468,16 @@
                         `Acceso correcto: ${membership.businesses.name}`;
 
 
-                    boton.disabled = false;
-                    boton.textContent =
-                        "Iniciar sesión";
+                    /*
+                     * 6. Ir automáticamente al panel
+                     */
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "../panel/";
+
+                    }, 500);
 
 
                 } catch (error) {
@@ -487,5 +504,4 @@
     </script>
 
 </body>
-
 </html>
