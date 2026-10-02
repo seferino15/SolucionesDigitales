@@ -1,1 +1,1228 @@
 
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mi negocio | Soluciones Digitales</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: #f3f5f7;
+            color: #111827;
+        }
+
+        /* =========================
+           CABECERA
+        ========================= */
+
+        .topbar {
+            background: #111827;
+            color: white;
+
+            padding: 16px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: white;
+            color: #111827;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .brand-text {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .back-button {
+            color: white;
+            text-decoration: none;
+
+            border: 1px solid rgba(255,255,255,0.2);
+
+            padding: 8px 12px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* =========================
+           CONTENEDOR
+        ========================= */
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+
+            margin: 0 auto;
+
+            padding: 30px 20px 60px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        h1 {
+            margin: 0;
+
+            font-size: 30px;
+
+            letter-spacing: -0.8px;
+        }
+
+        .subtitle {
+            margin-top: 7px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           FORMULARIO
+        ========================= */
+
+        .card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 8px 25px rgba(15,23,42,0.04);
+        }
+
+        .card-title {
+            margin: 0 0 18px;
+
+            font-size: 17px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 17px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,0.10);
+        }
+
+        .help {
+            margin-top: 5px;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+        /* =========================
+           COLORES
+        ========================= */
+
+        .color-input {
+            height: 46px;
+
+            padding: 4px;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           BOTONES
+        ========================= */
+
+        .actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .button {
+            border: 0;
+
+            border-radius: 10px;
+
+            padding: 12px 18px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .button-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .button-primary {
+            background: #111827;
+            color: white;
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        /* =========================
+           MENSAJE
+        ========================= */
+
+        .message {
+            display: none;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            margin-bottom: 18px;
+
+            font-size: 13px;
+        }
+
+        .message.success {
+            display: block;
+
+            background: #f0fdf4;
+            color: #15803d;
+        }
+
+        .message.error {
+            display: block;
+
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #6b7280;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding:
+                    22px 15px 40px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div id="app">
+
+    <div class="loading">
+        Cargando negocio...
+    </div>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase.js"></script>
+
+
+<script>
+
+let negocioActual = null;
+
+
+/* ==========================================
+   INICIO
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciar
+);
+
+
+async function iniciar() {
+
+    try {
+
+        /* ==============================
+           COMPROBAR SESIÓN
+        ============================== */
+
+        const {
+            data: {
+                session
+            }
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if (!session) {
+
+            window.location.href =
+                "../login/";
+
+            return;
+        }
+
+
+        /* ==============================
+           OBTENER NEGOCIO
+        ============================== */
+
+        const {
+            data: membership,
+            error
+        } =
+            await supabaseClient
+                .from("business_members")
+                .select(`
+                    business_id,
+                    role,
+                    businesses (*)
+                `)
+                .eq(
+                    "user_id",
+                    session.user.id
+                )
+                .limit(1)
+                .maybeSingle();
+
+
+        if (error) {
+
+            console.error(
+                "Error:",
+                error
+            );
+
+            mostrarError(
+                "No se ha podido cargar tu negocio."
+            );
+
+            return;
+        }
+
+
+        if (!membership || !membership.businesses) {
+
+            mostrarError(
+                "No tienes ningún negocio asociado."
+            );
+
+            return;
+        }
+
+
+        negocioActual =
+            membership.businesses;
+
+
+        cargarFormulario(
+            negocioActual
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error inesperado:",
+            error
+        );
+
+        mostrarError(
+            "Ha ocurrido un error inesperado."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   MOSTRAR FORMULARIO
+========================================== */
+
+function cargarFormulario(
+    business
+) {
+
+    document.title =
+        `${business.name} | Mi negocio`;
+
+
+    document.getElementById(
+        "app"
+    ).innerHTML = `
+
+        <header class="topbar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    SD
+                </div>
+
+                <div class="brand-text">
+                    Soluciones Digitales
+                </div>
+
+            </div>
+
+            <a
+                href="./"
+                class="back-button"
+            >
+                ← Volver al panel
+            </a>
+
+        </header>
+
+
+        <main class="container">
+
+
+            <section class="page-header">
+
+                <div class="page-label">
+                    CONFIGURACIÓN
+                </div>
+
+                <h1>
+                    Mi negocio
+                </h1>
+
+                <div class="subtitle">
+                    Edita la información que aparecerá
+                    en tu perfil digital.
+                </div>
+
+            </section>
+
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+            <!-- INFORMACIÓN -->
+
+            <section class="card">
+
+                <h2 class="card-title">
+                    Información básica
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Nombre del negocio
+                        </label>
+
+                        <input
+                            id="name"
+                            type="text"
+                            value="${escapeHtml(
+                                business.name || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="slug">
+                            Identificador
+                        </label>
+
+                        <input
+                            id="slug"
+                            type="text"
+                            value="${escapeHtml(
+                                business.slug || ""
+                            )}"
+                            disabled
+                        >
+
+                        <div class="help">
+                            El identificador se mantiene
+                            bloqueado para evitar romper
+                            los enlaces existentes.
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="description">
+                            Descripción
+                        </label>
+
+                        <textarea
+                            id="description"
+                        >${escapeHtml(
+                            business.description || ""
+                        )}</textarea>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- DIRECCIÓN -->
+
+            <section class="card">
+
+                <h2 class="card-title">
+                    Ubicación
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full">
+
+                        <label for="address">
+                            Dirección
+                        </label>
+
+                        <input
+                            id="address"
+                            type="text"
+                            value="${escapeHtml(
+                                business.address || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="city">
+                            Ciudad
+                        </label>
+
+                        <input
+                            id="city"
+                            type="text"
+                            value="${escapeHtml(
+                                business.city || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="province">
+                            Provincia
+                        </label>
+
+                        <input
+                            id="province"
+                            type="text"
+                            value="${escapeHtml(
+                                business.province || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- CONTACTO -->
+
+            <section class="card">
+
+                <h2 class="card-title">
+                    Contacto y enlaces
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Teléfono
+                        </label>
+
+                        <input
+                            id="phone"
+                            type="text"
+                            value="${escapeHtml(
+                                business.phone || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="whatsapp">
+                            WhatsApp
+                        </label>
+
+                        <input
+                            id="whatsapp"
+                            type="text"
+                            value="${escapeHtml(
+                                business.whatsapp || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="website">
+                            Página web
+                        </label>
+
+                        <input
+                            id="website"
+                            type="url"
+                            value="${escapeHtml(
+                                business.website || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="menu_url">
+                            Menú
+                        </label>
+
+                        <input
+                            id="menu_url"
+                            type="url"
+                            value="${escapeHtml(
+                                business.menu_url || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="google_url">
+                            Google
+                        </label>
+
+                        <input
+                            id="google_url"
+                            type="url"
+                            value="${escapeHtml(
+                                business.google_url || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="instagram_url">
+                            Instagram
+                        </label>
+
+                        <input
+                            id="instagram_url"
+                            type="url"
+                            value="${escapeHtml(
+                                business.instagram_url || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="facebook_url">
+                            Facebook
+                        </label>
+
+                        <input
+                            id="facebook_url"
+                            type="url"
+                            value="${escapeHtml(
+                                business.facebook_url || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="tiktok_url">
+                            TikTok
+                        </label>
+
+                        <input
+                            id="tiktok_url"
+                            type="url"
+                            value="${escapeHtml(
+                                business.tiktok_url || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- IMAGEN -->
+
+            <section class="card">
+
+                <h2 class="card-title">
+                    Imagen y apariencia
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full">
+
+                        <label for="logo_url">
+                            URL del logo
+                        </label>
+
+                        <input
+                            id="logo_url"
+                            type="url"
+                            value="${escapeHtml(
+                                business.logo_url || ""
+                            )}"
+                        >
+
+                        <div class="help">
+                            Puedes utilizar una imagen
+                            alojada públicamente.
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="primary_color">
+                            Color principal
+                        </label>
+
+                        <input
+                            id="primary_color"
+                            class="color-input"
+                            type="color"
+                            value="${colorValido(
+                                business.primary_color,
+                                "#111827"
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="secondary_color">
+                            Color secundario
+                        </label>
+
+                        <input
+                            id="secondary_color"
+                            class="color-input"
+                            type="color"
+                            value="${colorValido(
+                                business.secondary_color,
+                                "#2563eb"
+                            )}"
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="button button-secondary"
+                        type="button"
+                        onclick="window.location.href='./'"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        class="button button-primary"
+                        id="saveButton"
+                        type="button"
+                        onclick="guardarCambios()"
+                    >
+                        Guardar cambios
+                    </button>
+
+                </div>
+
+            </section>
+
+
+        </main>
+    `;
+}
+
+
+/* ==========================================
+   GUARDAR
+========================================== */
+
+async function guardarCambios() {
+
+    const boton =
+        document.getElementById(
+            "saveButton"
+        );
+
+    const mensaje =
+        document.getElementById(
+            "message"
+        );
+
+
+    boton.disabled = true;
+
+    boton.textContent =
+        "Guardando...";
+
+
+    mensaje.className =
+        "message";
+
+    mensaje.textContent =
+        "";
+
+
+    try {
+
+        const datos = {
+
+            name:
+                document
+                    .getElementById("name")
+                    .value
+                    .trim(),
+
+            description:
+                document
+                    .getElementById("description")
+                    .value
+                    .trim(),
+
+            address:
+                document
+                    .getElementById("address")
+                    .value
+                    .trim(),
+
+            city:
+                document
+                    .getElementById("city")
+                    .value
+                    .trim(),
+
+            province:
+                document
+                    .getElementById("province")
+                    .value
+                    .trim(),
+
+            phone:
+                document
+                    .getElementById("phone")
+                    .value
+                    .trim(),
+
+            whatsapp:
+                document
+                    .getElementById("whatsapp")
+                    .value
+                    .trim(),
+
+            website:
+                document
+                    .getElementById("website")
+                    .value
+                    .trim(),
+
+            menu_url:
+                document
+                    .getElementById("menu_url")
+                    .value
+                    .trim(),
+
+            google_url:
+                document
+                    .getElementById("google_url")
+                    .value
+                    .trim(),
+
+            instagram_url:
+                document
+                    .getElementById("instagram_url")
+                    .value
+                    .trim(),
+
+            facebook_url:
+                document
+                    .getElementById("facebook_url")
+                    .value
+                    .trim(),
+
+            tiktok_url:
+                document
+                    .getElementById("tiktok_url")
+                    .value
+                    .trim(),
+
+            logo_url:
+                document
+                    .getElementById("logo_url")
+                    .value
+                    .trim(),
+
+            primary_color:
+                document
+                    .getElementById("primary_color")
+                    .value,
+
+            secondary_color:
+                document
+                    .getElementById("secondary_color")
+                    .value
+
+        };
+
+
+        if (!datos.name) {
+
+            throw new Error(
+                "El nombre del negocio es obligatorio."
+            );
+        }
+
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("businesses")
+                .update(datos)
+                .eq(
+                    "id",
+                    negocioActual.id
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Error guardando:",
+                error
+            );
+
+            throw error;
+        }
+
+
+        // Actualizamos los datos locales
+
+        negocioActual = {
+            ...negocioActual,
+            ...datos
+        };
+
+
+        mensaje.className =
+            "message success";
+
+        mensaje.textContent =
+            "Cambios guardados correctamente.";
+
+
+        boton.disabled = false;
+
+        boton.textContent =
+            "Guardar cambios";
+
+
+    } catch (error) {
+
+        console.error(
+            "Error:",
+            error
+        );
+
+
+        mensaje.className =
+            "message error";
+
+        mensaje.textContent =
+            error.message ||
+            "No se han podido guardar los cambios.";
+
+
+        boton.disabled = false;
+
+        boton.textContent =
+            "Guardar cambios";
+    }
+
+}
+
+
+/* ==========================================
+   UTILIDADES
+========================================== */
+
+function escapeHtml(texto) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        texto ?? "";
+
+    return div.innerHTML;
+}
+
+
+function colorValido(
+    color,
+    defecto
+) {
+
+    if (
+        typeof color === "string" &&
+        /^#[0-9A-Fa-f]{6}$/.test(color)
+    ) {
+
+        return color;
+    }
+
+    return defecto;
+}
+
+
+function mostrarError(
+    mensaje
+) {
+
+    document.getElementById(
+        "app"
+    ).innerHTML = `
+
+        <main class="loading">
+
+            <div>
+                ${escapeHtml(mensaje)}
+            </div>
+
+        </main>
+
+    `;
+}
+
+</script>
+
+</body>
+
+</html>
