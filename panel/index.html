@@ -1,3 +1,1142 @@
-<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Panel · Soluciones Digitales</title><link rel="stylesheet" href="../css/panel.css"></head>
-<body><header class="panel-header"><a href="../">Soluciones Digitales</a><span>Panel</span></header><main class="panel"><section class="welcome"><span>PRÓXIMAMENTE</span><h1>Panel de gestión</h1><p>Aquí construiremos el acceso privado de clientes y el panel de administración. En la siguiente fase conectaremos Supabase.</p></section><section class="cards"><article><strong>Clientes</strong><span>Gestión de negocios</span></article><article><strong>Estadísticas</strong><span>Visitas e interacciones</span></article><article><strong>Perfil</strong><span>Editar información</span></article><article><strong>Promociones</strong><span>Ofertas y novedades</span></article></section></main></body></html>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Panel | Soluciones Digitales</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: #f3f5f7;
+            color: #111827;
+        }
+
+        /* =========================
+           CABECERA
+        ========================= */
+
+        .topbar {
+            background: #111827;
+            color: white;
+
+            padding: 16px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: white;
+            color: #111827;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .brand-text {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .logout-button {
+            border: 1px solid rgba(255,255,255,0.2);
+
+            background: transparent;
+            color: white;
+
+            padding: 8px 12px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+        }
+
+        .logout-button:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* =========================
+           CONTENEDOR
+        ========================= */
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 28px 20px 50px;
+        }
+
+        /* =========================
+           NEGOCIO
+        ========================= */
+
+        .business-header {
+            margin-bottom: 25px;
+        }
+
+        .business-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .business-name {
+            margin: 0;
+
+            font-size: 30px;
+            letter-spacing: -0.8px;
+        }
+
+        .business-description {
+            margin-top: 7px;
+
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* =========================
+           ESTADÍSTICAS
+        ========================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+                0 8px 25px rgba(15,23,42,0.04);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+        }
+
+        /* =========================
+           SECCIONES
+        ========================= */
+
+        .section-title {
+            font-size: 18px;
+
+            margin:
+                0 0 14px;
+        }
+
+        .modules-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+        }
+
+        .module-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            transition:
+                transform 0.15s,
+                box-shadow 0.15s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 30px rgba(15,23,42,0.07);
+        }
+
+        .module-icon {
+            font-size: 25px;
+
+            margin-bottom: 12px;
+        }
+
+        .module-title {
+            font-size: 15px;
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .module-description {
+            font-size: 12px;
+
+            color: #6b7280;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           INFORMACIÓN
+        ========================= */
+
+        .info-section {
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 16px;
+
+            padding: 20px;
+        }
+
+        .info-row {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 10px 0;
+
+            border-bottom:
+                1px solid #f0f0f0;
+
+            font-size: 13px;
+        }
+
+        .info-row:last-child {
+            border-bottom: 0;
+        }
+
+        .info-label {
+            color: #6b7280;
+        }
+
+        .info-value {
+            font-weight: 600;
+        }
+
+        /* =========================
+           LOADING / ERROR
+        ========================= */
+
+        .loading {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+        .error-screen {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+            text-align: center;
+        }
+
+        .error-box {
+            max-width: 400px;
+        }
+
+        .error-box h1 {
+            margin-bottom: 8px;
+        }
+
+        .error-box p {
+            color: #6b7280;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .modules-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 520px) {
+
+            .container {
+                padding:
+                    22px 15px 40px;
+            }
+
+            .business-name {
+                font-size: 25px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div id="app">
+
+    <div class="loading">
+        Cargando panel...
+    </div>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarPanel
+);
+
+
+async function iniciarPanel() {
+
+    try {
+
+        /* ==========================================
+           1. COMPROBAR SESIÓN
+        ========================================== */
+
+        const {
+            data: {
+                session
+            }
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if (!session) {
+
+            window.location.href =
+                "../login/";
+
+            return;
+        }
+
+
+        const user =
+            session.user;
+
+
+        console.log(
+            "USUARIO AUTENTICADO:",
+            user
+        );
+
+
+        /* ==========================================
+           2. OBTENER NEGOCIO DEL USUARIO
+        ========================================== */
+
+        const {
+            data: membership,
+            error: membershipError
+        } =
+            await supabaseClient
+                .from("business_members")
+                .select(`
+                    business_id,
+                    role,
+                    businesses (
+                        id,
+                        name,
+                        slug,
+                        description,
+                        city,
+                        province
+                    )
+                `)
+                .eq(
+                    "user_id",
+                    user.id
+                )
+                .limit(1)
+                .maybeSingle();
+
+
+        if (membershipError) {
+
+            console.error(
+                "Error obteniendo negocio:",
+                membershipError
+            );
+
+            mostrarError(
+                "No se ha podido cargar tu negocio."
+            );
+
+            return;
+        }
+
+
+        if (!membership) {
+
+            mostrarError(
+                "Tu usuario no tiene ningún negocio asociado."
+            );
+
+            return;
+        }
+
+
+        const business =
+            membership.businesses;
+
+
+        if (!business) {
+
+            mostrarError(
+                "No se ha encontrado el negocio."
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "NEGOCIO:",
+            business
+        );
+
+
+        /* ==========================================
+           3. CARGAR PANEL
+        ========================================== */
+
+        document.title =
+            `${business.name} | Panel`;
+
+
+        renderizarPanel(
+            business,
+            membership.role
+        );
+
+
+        /* ==========================================
+           4. CARGAR ESTADÍSTICAS
+        ========================================== */
+
+        await cargarEstadisticas(
+            business.id
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error inesperado:",
+            error
+        );
+
+        mostrarError(
+            "Ha ocurrido un error inesperado."
+        );
+
+    }
+
+}
+
+
+/* ================================================
+   RENDERIZAR PANEL
+================================================ */
+
+function renderizarPanel(
+    business,
+    role
+) {
+
+    const app =
+        document.getElementById("app");
+
+
+    app.innerHTML = `
+
+        <header class="topbar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    SD
+                </div>
+
+                <div class="brand-text">
+                    Soluciones Digitales
+                </div>
+
+            </div>
+
+            <button
+                class="logout-button"
+                onclick="cerrarSesion()"
+            >
+                Cerrar sesión
+            </button>
+
+        </header>
+
+
+        <main class="container">
+
+
+            <section class="business-header">
+
+                <div class="business-label">
+                    PANEL DE NEGOCIO
+                </div>
+
+                <h1 class="business-name">
+                    ${escapeHtml(business.name)}
+                </h1>
+
+                <div class="business-description">
+
+                    ${escapeHtml(
+                        business.description || ""
+                    )}
+
+                </div>
+
+            </section>
+
+
+            <!-- ESTADÍSTICAS -->
+
+            <section>
+
+                <div class="stats-grid">
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Visitas
+                        </div>
+
+                        <div
+                            class="stat-number"
+                            id="statVisits"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Clics Google
+                        </div>
+
+                        <div
+                            class="stat-number"
+                            id="statGoogle"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Clics WhatsApp
+                        </div>
+
+                        <div
+                            class="stat-number"
+                            id="statWhatsapp"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-label">
+                            Clics Instagram
+                        </div>
+
+                        <div
+                            class="stat-number"
+                            id="statInstagram"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- MÓDULOS -->
+
+            <section>
+
+                <h2 class="section-title">
+                    Gestión
+                </h2>
+
+
+                <div class="modules-grid">
+
+
+                    <a
+                        class="module-card"
+                        href="#"
+                        onclick="return false;"
+                    >
+
+                        <div class="module-icon">
+                            🏪
+                        </div>
+
+                        <div class="module-title">
+                            Mi negocio
+                        </div>
+
+                        <div class="module-description">
+                            Edita nombre, descripción,
+                            logo, dirección y enlaces.
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        class="module-card"
+                        href="#"
+                        onclick="return false;"
+                    >
+
+                        <div class="module-icon">
+                            📱
+                        </div>
+
+                        <div class="module-title">
+                            Dispositivos NFC
+                        </div>
+
+                        <div class="module-description">
+                            Gestiona tus tarjetas,
+                            expositores y dispositivos.
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        class="module-card"
+                        href="#"
+                        onclick="return false;"
+                    >
+
+                        <div class="module-icon">
+                            🕐
+                        </div>
+
+                        <div class="module-title">
+                            Horarios
+                        </div>
+
+                        <div class="module-description">
+                            Configura los horarios
+                            de apertura de tu negocio.
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        class="module-card"
+                        href="#"
+                        onclick="return false;"
+                    >
+
+                        <div class="module-icon">
+                            🎁
+                        </div>
+
+                        <div class="module-title">
+                            Promociones
+                        </div>
+
+                        <div class="module-description">
+                            Crea y gestiona promociones
+                            visibles en tu perfil.
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        class="module-card"
+                        href="#"
+                        onclick="return false;"
+                    >
+
+                        <div class="module-icon">
+                            📊
+                        </div>
+
+                        <div class="module-title">
+                            Estadísticas
+                        </div>
+
+                        <div class="module-description">
+                            Analiza visitas, clics
+                            y rendimiento.
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        class="module-card"
+                        href="#"
+                        onclick="return false;"
+                    >
+
+                        <div class="module-icon">
+                            ⚙️
+                        </div>
+
+                        <div class="module-title">
+                            Configuración
+                        </div>
+
+                        <div class="module-description">
+                            Configuración de tu cuenta
+                            y preferencias.
+                        </div>
+
+                    </a>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- INFORMACIÓN -->
+
+            <section class="info-section">
+
+                <h2 class="section-title">
+                    Información
+                </h2>
+
+
+                <div class="info-card">
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Ciudad
+                        </span>
+
+                        <span class="info-value">
+                            ${escapeHtml(
+                                business.city || "—"
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Provincia
+                        </span>
+
+                        <span class="info-value">
+                            ${escapeHtml(
+                                business.province || "—"
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Rol
+                        </span>
+
+                        <span class="info-value">
+                            ${escapeHtml(role)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Estado
+                        </span>
+
+                        <span class="info-value">
+                            Activo
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+        </main>
+    `;
+}
+
+
+/* ================================================
+   ESTADÍSTICAS
+================================================ */
+
+async function cargarEstadisticas(
+    businessId
+) {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("analytics")
+            .select(
+                "event_type,target_url"
+            )
+            .eq(
+                "business_id",
+                businessId
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Error cargando estadísticas:",
+            error
+        );
+
+        return;
+    }
+
+
+    let visitas = 0;
+    let google = 0;
+    let whatsapp = 0;
+    let instagram = 0;
+
+
+    (data || []).forEach(
+        evento => {
+
+            if (
+                evento.event_type ===
+                "page_view"
+            ) {
+
+                visitas++;
+
+            }
+
+
+            if (
+                evento.event_type ===
+                "click"
+            ) {
+
+                const url =
+                    (
+                        evento.target_url ||
+                        ""
+                    ).toLowerCase();
+
+
+                if (
+                    url.includes(
+                        "google"
+                    )
+                ) {
+
+                    google++;
+
+                }
+
+
+                if (
+                    url.includes(
+                        "wa.me"
+                    ) ||
+                    url.includes(
+                        "whatsapp"
+                    )
+                ) {
+
+                    whatsapp++;
+
+                }
+
+
+                if (
+                    url.includes(
+                        "instagram"
+                    )
+                ) {
+
+                    instagram++;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "statVisits"
+    ).textContent = visitas;
+
+
+    document.getElementById(
+        "statGoogle"
+    ).textContent = google;
+
+
+    document.getElementById(
+        "statWhatsapp"
+    ).textContent = whatsapp;
+
+
+    document.getElementById(
+        "statInstagram"
+    ).textContent = instagram;
+
+}
+
+
+/* ================================================
+   CERRAR SESIÓN
+================================================ */
+
+async function cerrarSesion() {
+
+    const {
+        error
+    } =
+        await supabaseClient.auth.signOut();
+
+
+    if (error) {
+
+        console.error(
+            "Error cerrando sesión:",
+            error
+        );
+
+        return;
+    }
+
+
+    window.location.href =
+        "../login/";
+
+}
+
+
+/* ================================================
+   ERROR
+================================================ */
+
+function mostrarError(
+    mensaje
+) {
+
+    document.getElementById(
+        "app"
+    ).innerHTML = `
+
+        <main class="error-screen">
+
+            <div class="error-box">
+
+                <h1>
+                    Soluciones Digitales
+                </h1>
+
+                <p>
+                    ${escapeHtml(mensaje)}
+                </p>
+
+            </div>
+
+        </main>
+
+    `;
+}
+
+
+/* ================================================
+   SEGURIDAD HTML
+================================================ */
+
+function escapeHtml(
+    texto
+) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        texto ?? "";
+
+    return div.innerHTML;
+}
+
+</script>
+
+</body>
+
+</html>
