@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-
+   let negocioActual = null;
+    let dispositivoActual = null;
     const params = new URLSearchParams(window.location.search);
 
     const cliente = params.get("cliente");
