@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,14 +12,21 @@
 
     <title>Mi negocio | Soluciones Digitales</title>
 
+
     <style>
 
         * {
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
+            background: #f3f5f7;
+
+            color: #111827;
 
             font-family:
                 Inter,
@@ -30,169 +36,191 @@
                 Roboto,
                 Arial,
                 sans-serif;
-
-            background: #f3f5f7;
-            color: #111827;
         }
 
-        /* =========================
-           CABECERA
-        ========================= */
 
-        .topbar {
-            background: #111827;
-            color: white;
+        .page {
 
-            padding: 16px 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-logo {
-            width: 38px;
-            height: 38px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 11px;
-
-            background: white;
-            color: #111827;
-
-            font-size: 13px;
-            font-weight: 800;
-        }
-
-        .brand-text {
-            font-size: 15px;
-            font-weight: 700;
-        }
-
-        .back-button {
-            color: white;
-            text-decoration: none;
-
-            border: 1px solid rgba(255,255,255,0.2);
-
-            padding: 8px 12px;
-
-            border-radius: 8px;
-
-            font-size: 12px;
-        }
-
-        .back-button:hover {
-            background: rgba(255,255,255,0.08);
-        }
-
-        /* =========================
-           CONTENEDOR
-        ========================= */
-
-        .container {
             width: 100%;
-            max-width: 850px;
+
+            max-width: 900px;
 
             margin: 0 auto;
 
-            padding: 30px 20px 60px;
+            padding: 30px 20px 50px;
         }
 
-        .page-header {
+
+        .topbar {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
             margin-bottom: 25px;
         }
 
-        .page-label {
-            font-size: 12px;
+
+        .back-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .back-button:hover {
+
+            background: #f9fafb;
+        }
+
+
+        .top-title {
+
+            font-size: 13px;
+
             color: #6b7280;
-            margin-bottom: 5px;
         }
 
-        h1 {
+
+        .header {
+
+            margin-bottom: 25px;
+        }
+
+
+        .header h1 {
+
+            margin: 0 0 6px;
+
+            font-size: 28px;
+
+            letter-spacing: -0.6px;
+        }
+
+
+        .header p {
+
             margin: 0;
-
-            font-size: 30px;
-
-            letter-spacing: -0.8px;
-        }
-
-        .subtitle {
-            margin-top: 7px;
 
             color: #6b7280;
 
             font-size: 14px;
         }
 
-        /* =========================
-           FORMULARIO
-        ========================= */
 
         .card {
+
             background: white;
 
-            border: 1px solid #e5e7eb;
+            border-radius: 20px;
 
-            border-radius: 18px;
+            padding: 25px;
 
-            padding: 24px;
+            margin-bottom: 20px;
 
-            margin-bottom: 18px;
+            border: 1px solid rgba(0,0,0,0.04);
 
             box-shadow:
-                0 8px 25px rgba(15,23,42,0.04);
+                0 10px 30px rgba(15,23,42,0.05);
         }
+
 
         .card-title {
-            margin: 0 0 18px;
+
+            margin: 0 0 5px;
 
             font-size: 17px;
+
+            font-weight: 750;
         }
 
+
+        .card-description {
+
+            margin: 0 0 22px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
         .form-grid {
+
             display: grid;
 
             grid-template-columns:
-                repeat(2, 1fr);
+                repeat(2, minmax(0, 1fr));
 
-            gap: 17px;
+            gap: 18px;
         }
+
 
         .form-group {
+
             display: flex;
+
             flex-direction: column;
+
+            gap: 7px;
         }
 
-        .full {
+
+        .form-group.full {
+
             grid-column: 1 / -1;
         }
 
+
         label {
-            margin-bottom: 7px;
 
             font-size: 13px;
-            font-weight: 600;
+
+            font-weight: 700;
+
+            color: #374151;
         }
+
 
         input,
         textarea {
-            width: 100%;
 
-            padding: 12px 13px;
+            width: 100%;
 
             border: 1px solid #d1d5db;
 
-            border-radius: 10px;
+            border-radius: 11px;
+
+            padding: 11px 13px;
+
+            background: white;
+
+            color: #111827;
 
             font-family: inherit;
 
@@ -205,158 +233,273 @@
                 box-shadow 0.2s;
         }
 
+
+        input {
+
+            height: 44px;
+        }
+
+
         textarea {
+
             min-height: 100px;
+
             resize: vertical;
         }
 
+
         input:focus,
         textarea:focus {
+
             border-color: #2563eb;
 
             box-shadow:
-                0 0 0 3px
-                rgba(37,99,235,0.10);
+                0 0 0 3px rgba(37,99,235,0.10);
         }
 
+
+        input:disabled {
+
+            background: #f3f4f6;
+
+            color: #6b7280;
+
+            cursor: not-allowed;
+        }
+
+
         .help {
-            margin-top: 5px;
+
+            font-size: 11px;
 
             color: #9ca3af;
 
-            font-size: 11px;
+            line-height: 1.4;
         }
 
-        /* =========================
-           COLORES
-        ========================= */
 
-        .color-input {
-            height: 46px;
+        .color-row {
 
-            padding: 4px;
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+        }
+
+
+        .color-row input[type="color"] {
+
+            width: 52px;
+
+            height: 44px;
+
+            padding: 3px;
 
             cursor: pointer;
         }
 
-        /* =========================
-           BOTONES
-        ========================= */
 
-        .actions {
-            display: flex;
+        .color-row input[type="text"] {
 
-            justify-content: flex-end;
-
-            gap: 10px;
-
-            margin-top: 20px;
+            flex: 1;
         }
 
-        .button {
+
+        .actions {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+
+        .save-button {
+
+            min-width: 160px;
+
+            height: 46px;
+
+            padding: 0 20px;
+
             border: 0;
 
-            border-radius: 10px;
+            border-radius: 11px;
 
-            padding: 12px 18px;
+            background: #2563eb;
+
+            color: white;
 
             font-size: 14px;
+
             font-weight: 700;
 
             cursor: pointer;
         }
 
-        .button-secondary {
-            background: #f3f4f6;
-            color: #374151;
+
+        .save-button:hover {
+
+            background: #1d4ed8;
         }
 
-        .button-primary {
-            background: #111827;
-            color: white;
-        }
 
-        .button:disabled {
+        .save-button:disabled {
+
             opacity: 0.6;
-            cursor: wait;
+
+            cursor: not-allowed;
         }
 
-        /* =========================
-           MENSAJE
-        ========================= */
 
-        .message {
+        .status {
+
             display: none;
 
-            padding: 12px 14px;
+            padding: 11px 14px;
 
             border-radius: 10px;
 
-            margin-bottom: 18px;
-
             font-size: 13px;
+
+            line-height: 1.4;
         }
 
-        .message.success {
+
+        .status.success {
+
             display: block;
 
-            background: #f0fdf4;
-            color: #15803d;
+            background: #ecfdf5;
+
+            color: #047857;
         }
 
-        .message.error {
+
+        .status.error {
+
             display: block;
 
             background: #fef2f2;
+
             color: #b91c1c;
         }
 
-        /* =========================
-           LOADING
-        ========================= */
 
         .loading {
-            min-height: 100vh;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+
+        .logo-preview {
 
             display: flex;
 
             align-items: center;
-            justify-content: center;
 
-            color: #6b7280;
+            gap: 15px;
+
+            margin-top: 5px;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
 
-        @media (max-width: 600px) {
+        .logo-preview-box {
 
-            .container {
-                padding:
-                    22px 15px 40px;
+            width: 70px;
+
+            height: 70px;
+
+            border-radius: 17px;
+
+            background: #111827;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-weight: 800;
+
+            flex-shrink: 0;
+        }
+
+
+        .logo-preview-box img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        @media (max-width: 650px) {
+
+            .page {
+
+                padding: 20px 14px 40px;
             }
 
+
             .form-grid {
+
                 grid-template-columns: 1fr;
             }
 
-            .full {
+
+            .form-group.full {
+
                 grid-column: auto;
             }
 
-            h1 {
-                font-size: 25px;
+
+            .card {
+
+                padding: 20px;
             }
 
-            .actions {
+
+            .topbar {
+
+                align-items: flex-start;
+
                 flex-direction: column;
             }
 
-            .button {
-                width: 100%;
+
+            .actions {
+
+                flex-direction: column;
+
+                align-items: stretch;
             }
 
+
+            .save-button {
+
+                width: 100%;
+            }
         }
 
     </style>
@@ -367,164 +510,12 @@
 <body>
 
 
-<div id="app">
-
-    <div class="loading">
-        Cargando negocio...
-    </div>
-
-</div>
+    <main class="page">
 
 
-<!-- SUPABASE -->
+        <!-- CABECERA -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../js/supabase.js"></script>
-
-
-<script>
-
-let negocioActual = null;
-
-
-/* ==========================================
-   INICIO
-========================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    iniciar
-);
-
-
-async function iniciar() {
-
-    try {
-
-        /* ==============================
-           COMPROBAR SESIÓN
-        ============================== */
-
-        const {
-            data: {
-                session
-            }
-        } =
-            await supabaseClient.auth.getSession();
-
-
-        if (!session) {
-
-            window.location.href =
-                "../login/";
-
-            return;
-        }
-
-
-        /* ==============================
-           OBTENER NEGOCIO
-        ============================== */
-
-        const {
-            data: membership,
-            error
-        } =
-            await supabaseClient
-                .from("business_members")
-                .select(`
-                    business_id,
-                    role,
-                    businesses (*)
-                `)
-                .eq(
-                    "user_id",
-                    session.user.id
-                )
-                .limit(1)
-                .maybeSingle();
-
-
-        if (error) {
-
-            console.error(
-                "Error:",
-                error
-            );
-
-            mostrarError(
-                "No se ha podido cargar tu negocio."
-            );
-
-            return;
-        }
-
-
-        if (!membership || !membership.businesses) {
-
-            mostrarError(
-                "No tienes ningún negocio asociado."
-            );
-
-            return;
-        }
-
-
-        negocioActual =
-            membership.businesses;
-
-
-        cargarFormulario(
-            negocioActual
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Error inesperado:",
-            error
-        );
-
-        mostrarError(
-            "Ha ocurrido un error inesperado."
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   MOSTRAR FORMULARIO
-========================================== */
-
-function cargarFormulario(
-    business
-) {
-
-    document.title =
-        `${business.name} | Mi negocio`;
-
-
-    document.getElementById(
-        "app"
-    ).innerHTML = `
-
-        <header class="topbar">
-
-            <div class="brand">
-
-                <div class="brand-logo">
-                    SD
-                </div>
-
-                <div class="brand-text">
-                    Soluciones Digitales
-                </div>
-
-            </div>
+        <div class="topbar">
 
             <a
                 href="./"
@@ -533,43 +524,58 @@ function cargarFormulario(
                 ← Volver al panel
             </a>
 
+            <div
+                class="top-title"
+                id="businessTitle"
+            >
+                Cargando...
+            </div>
+
+        </div>
+
+
+        <header class="header">
+
+            <h1>
+                Mi negocio
+            </h1>
+
+            <p>
+                Gestiona la información que aparece en tu perfil digital.
+            </p>
+
         </header>
 
 
-        <main class="container">
+        <!-- LOADING -->
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            Cargando información del negocio...
+        </div>
 
 
-            <section class="page-header">
+        <!-- CONTENIDO -->
 
-                <div class="page-label">
-                    CONFIGURACIÓN
-                </div>
-
-                <h1>
-                    Mi negocio
-                </h1>
-
-                <div class="subtitle">
-                    Edita la información que aparecerá
-                    en tu perfil digital.
-                </div>
-
-            </section>
+        <div
+            id="content"
+            style="display:none;"
+        >
 
 
-            <div
-                id="message"
-                class="message"
-            ></div>
-
-
-            <!-- INFORMACIÓN -->
+            <!-- INFORMACIÓN BÁSICA -->
 
             <section class="card">
 
                 <h2 class="card-title">
                     Información básica
                 </h2>
+
+                <p class="card-description">
+                    Estos datos identifican tu negocio y aparecen en tu perfil público.
+                </p>
 
 
                 <div class="form-grid">
@@ -582,11 +588,9 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="name"
                             type="text"
-                            value="${escapeHtml(
-                                business.name || ""
-                            )}"
+                            id="name"
+                            placeholder="Ej. Bar Manolo"
                         >
 
                     </div>
@@ -599,19 +603,14 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="slug"
                             type="text"
-                            value="${escapeHtml(
-                                business.slug || ""
-                            )}"
+                            id="slug"
                             disabled
                         >
 
-                        <div class="help">
-                            El identificador se mantiene
-                            bloqueado para evitar romper
-                            los enlaces existentes.
-                        </div>
+                        <span class="help">
+                            Este identificador no se puede modificar desde aquí.
+                        </span>
 
                     </div>
 
@@ -624,42 +623,22 @@ function cargarFormulario(
 
                         <textarea
                             id="description"
-                        >${escapeHtml(
-                            business.description || ""
-                        )}</textarea>
+                            placeholder="Describe brevemente tu negocio..."
+                        ></textarea>
 
                     </div>
 
 
-                </div>
-
-            </section>
-
-
-            <!-- DIRECCIÓN -->
-
-            <section class="card">
-
-                <h2 class="card-title">
-                    Ubicación
-                </h2>
-
-
-                <div class="form-grid">
-
-
-                    <div class="form-group full">
+                    <div class="form-group">
 
                         <label for="address">
                             Dirección
                         </label>
 
                         <input
-                            id="address"
                             type="text"
-                            value="${escapeHtml(
-                                business.address || ""
-                            )}"
+                            id="address"
+                            placeholder="Calle, número..."
                         >
 
                     </div>
@@ -672,11 +651,9 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="city"
                             type="text"
-                            value="${escapeHtml(
-                                business.city || ""
-                            )}"
+                            id="city"
+                            placeholder="Almendralejo"
                         >
 
                     </div>
@@ -689,11 +666,24 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="province"
                             type="text"
-                            value="${escapeHtml(
-                                business.province || ""
-                            )}"
+                            id="province"
+                            placeholder="Badajoz"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Teléfono
+                        </label>
+
+                        <input
+                            type="text"
+                            id="phone"
+                            placeholder="924000000"
                         >
 
                     </div>
@@ -704,7 +694,7 @@ function cargarFormulario(
             </section>
 
 
-            <!-- CONTACTO -->
+            <!-- CONTACTO Y ENLACES -->
 
             <section class="card">
 
@@ -712,25 +702,12 @@ function cargarFormulario(
                     Contacto y enlaces
                 </h2>
 
+                <p class="card-description">
+                    Añade las páginas y canales que quieres mostrar en tu perfil.
+                </p>
+
 
                 <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label for="phone">
-                            Teléfono
-                        </label>
-
-                        <input
-                            id="phone"
-                            type="text"
-                            value="${escapeHtml(
-                                business.phone || ""
-                            )}"
-                        >
-
-                    </div>
 
 
                     <div class="form-group">
@@ -740,11 +717,9 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="whatsapp"
                             type="text"
-                            value="${escapeHtml(
-                                business.whatsapp || ""
-                            )}"
+                            id="whatsapp"
+                            placeholder="https://wa.me/34600000000"
                         >
 
                     </div>
@@ -757,28 +732,9 @@ function cargarFormulario(
                         </label>
 
                         <input
+                            type="url"
                             id="website"
-                            type="url"
-                            value="${escapeHtml(
-                                business.website || ""
-                            )}"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="menu_url">
-                            Menú
-                        </label>
-
-                        <input
-                            id="menu_url"
-                            type="url"
-                            value="${escapeHtml(
-                                business.menu_url || ""
-                            )}"
+                            placeholder="https://www.tunegocio.com"
                         >
 
                     </div>
@@ -791,11 +747,24 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="google_url"
                             type="url"
-                            value="${escapeHtml(
-                                business.google_url || ""
-                            )}"
+                            id="google_url"
+                            placeholder="Enlace para dejar una reseña"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="menu_url">
+                            Menú
+                        </label>
+
+                        <input
+                            type="url"
+                            id="menu_url"
+                            placeholder="https://..."
                         >
 
                     </div>
@@ -808,11 +777,9 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="instagram_url"
                             type="url"
-                            value="${escapeHtml(
-                                business.instagram_url || ""
-                            )}"
+                            id="instagram_url"
+                            placeholder="https://instagram.com/..."
                         >
 
                     </div>
@@ -825,11 +792,9 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="facebook_url"
                             type="url"
-                            value="${escapeHtml(
-                                business.facebook_url || ""
-                            )}"
+                            id="facebook_url"
+                            placeholder="https://facebook.com/..."
                         >
 
                     </div>
@@ -842,11 +807,9 @@ function cargarFormulario(
                         </label>
 
                         <input
-                            id="tiktok_url"
                             type="url"
-                            value="${escapeHtml(
-                                business.tiktok_url || ""
-                            )}"
+                            id="tiktok_url"
+                            placeholder="https://tiktok.com/@..."
                         >
 
                     </div>
@@ -857,35 +820,93 @@ function cargarFormulario(
             </section>
 
 
-            <!-- IMAGEN -->
+            <!-- LOGO -->
 
             <section class="card">
 
                 <h2 class="card-title">
-                    Imagen y apariencia
+                    Logo
                 </h2>
+
+                <p class="card-description">
+                    Introduce la URL de la imagen que quieres utilizar como logo.
+                </p>
+
+
+                <div class="form-group">
+
+                    <label for="logo_url">
+                        URL del logo
+                    </label>
+
+                    <input
+                        type="url"
+                        id="logo_url"
+                        placeholder="https://..."
+                    >
+
+                    <span class="help">
+                        Puedes utilizar una imagen alojada en Internet.
+                    </span>
+
+                </div>
+
+
+                <div class="logo-preview">
+
+                    <div
+                        class="logo-preview-box"
+                        id="logoPreview"
+                    >
+                        SD
+                    </div>
+
+                    <span class="help">
+                        Vista previa del logo
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- COLORES -->
+
+            <section class="card">
+
+                <h2 class="card-title">
+                    Personalización
+                </h2>
+
+                <p class="card-description">
+                    Personaliza los colores principales del perfil público.
+                </p>
 
 
                 <div class="form-grid">
 
 
-                    <div class="form-group full">
+                    <div class="form-group">
 
-                        <label for="logo_url">
-                            URL del logo
+                        <label>
+                            Color principal
                         </label>
 
-                        <input
-                            id="logo_url"
-                            type="url"
-                            value="${escapeHtml(
-                                business.logo_url || ""
-                            )}"
-                        >
+                        <div class="color-row">
 
-                        <div class="help">
-                            Puedes utilizar una imagen
-                            alojada públicamente.
+                            <input
+                                type="color"
+                                id="primary_color_picker"
+                                value="#111827"
+                            >
+
+                            <input
+                                type="text"
+                                id="primary_color"
+                                value="#111827"
+                                maxlength="7"
+                            >
+
                         </div>
 
                     </div>
@@ -893,60 +914,55 @@ function cargarFormulario(
 
                     <div class="form-group">
 
-                        <label for="primary_color">
-                            Color principal
-                        </label>
-
-                        <input
-                            id="primary_color"
-                            class="color-input"
-                            type="color"
-                            value="${colorValido(
-                                business.primary_color,
-                                "#111827"
-                            )}"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="secondary_color">
+                        <label>
                             Color secundario
                         </label>
 
-                        <input
-                            id="secondary_color"
-                            class="color-input"
-                            type="color"
-                            value="${colorValido(
-                                business.secondary_color,
-                                "#2563eb"
-                            )}"
-                        >
+                        <div class="color-row">
+
+                            <input
+                                type="color"
+                                id="secondary_color_picker"
+                                value="#2563eb"
+                            >
+
+                            <input
+                                type="text"
+                                id="secondary_color"
+                                value="#2563eb"
+                                maxlength="7"
+                            >
+
+                        </div>
 
                     </div>
 
 
                 </div>
 
+            </section>
+
+
+            <!-- GUARDAR -->
+
+            <section class="card">
+
+                <div
+                    id="status"
+                    class="status"
+                ></div>
+
 
                 <div class="actions">
 
-                    <button
-                        class="button button-secondary"
-                        type="button"
-                        onclick="window.location.href='./'"
-                    >
-                        Cancelar
-                    </button>
+                    <span class="help">
+                        Los cambios se guardarán directamente en tu negocio.
+                    </span>
 
                     <button
-                        class="button button-primary"
-                        id="saveButton"
                         type="button"
-                        onclick="guardarCambios()"
+                        id="saveButton"
+                        class="save-button"
                     >
                         Guardar cambios
                     </button>
@@ -956,272 +972,772 @@ function cargarFormulario(
             </section>
 
 
-        </main>
-    `;
-}
+        </div>
 
 
-/* ==========================================
-   GUARDAR
-========================================== */
+    </main>
 
-async function guardarCambios() {
 
-    const boton =
-        document.getElementById(
-            "saveButton"
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../js/supabase.js"></script>
+
+
+    <script>
+
+        let negocioActual = null;
+
+
+        /*
+         * ELEMENTOS
+         */
+
+        const loading =
+            document.getElementById("loading");
+
+        const content =
+            document.getElementById("content");
+
+        const status =
+            document.getElementById("status");
+
+        const saveButton =
+            document.getElementById("saveButton");
+
+
+        /*
+         * INICIO
+         */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            cargarNegocio
         );
 
-    const mensaje =
-        document.getElementById(
-            "message"
-        );
+
+        /*
+         * CARGAR NEGOCIO
+         */
+
+        async function cargarNegocio() {
+
+            try {
+
+                /*
+                 * Comprobar sesión
+                 */
+
+                const {
+                    data: sessionData
+                } =
+                    await supabaseClient.auth.getSession();
 
 
-    boton.disabled = true;
+                if (
+                    !sessionData ||
+                    !sessionData.session
+                ) {
 
-    boton.textContent =
-        "Guardando...";
+                    window.location.href =
+                        "../login/";
 
-
-    mensaje.className =
-        "message";
-
-    mensaje.textContent =
-        "";
-
-
-    try {
-
-        const datos = {
-
-            name:
-                document
-                    .getElementById("name")
-                    .value
-                    .trim(),
-
-            description:
-                document
-                    .getElementById("description")
-                    .value
-                    .trim(),
-
-            address:
-                document
-                    .getElementById("address")
-                    .value
-                    .trim(),
-
-            city:
-                document
-                    .getElementById("city")
-                    .value
-                    .trim(),
-
-            province:
-                document
-                    .getElementById("province")
-                    .value
-                    .trim(),
-
-            phone:
-                document
-                    .getElementById("phone")
-                    .value
-                    .trim(),
-
-            whatsapp:
-                document
-                    .getElementById("whatsapp")
-                    .value
-                    .trim(),
-
-            website:
-                document
-                    .getElementById("website")
-                    .value
-                    .trim(),
-
-            menu_url:
-                document
-                    .getElementById("menu_url")
-                    .value
-                    .trim(),
-
-            google_url:
-                document
-                    .getElementById("google_url")
-                    .value
-                    .trim(),
-
-            instagram_url:
-                document
-                    .getElementById("instagram_url")
-                    .value
-                    .trim(),
-
-            facebook_url:
-                document
-                    .getElementById("facebook_url")
-                    .value
-                    .trim(),
-
-            tiktok_url:
-                document
-                    .getElementById("tiktok_url")
-                    .value
-                    .trim(),
-
-            logo_url:
-                document
-                    .getElementById("logo_url")
-                    .value
-                    .trim(),
-
-            primary_color:
-                document
-                    .getElementById("primary_color")
-                    .value,
-
-            secondary_color:
-                document
-                    .getElementById("secondary_color")
-                    .value
-
-        };
+                    return;
+                }
 
 
-        if (!datos.name) {
-
-            throw new Error(
-                "El nombre del negocio es obligatorio."
-            );
-        }
+                const usuario =
+                    sessionData.session.user;
 
 
-        const {
-            error
-        } =
-            await supabaseClient
-                .from("businesses")
-                .update(datos)
-                .eq(
-                    "id",
-                    negocioActual.id
+                /*
+                 * Buscar negocio del usuario
+                 */
+
+                const {
+                    data: membership,
+                    error: membershipError
+                } =
+                    await supabaseClient
+                        .from("business_members")
+                        .select(`
+                            business_id,
+                            role,
+                            businesses (
+                                *
+                            )
+                        `)
+                        .eq("user_id", usuario.id)
+                        .limit(1)
+                        .maybeSingle();
+
+
+                if (membershipError) {
+
+                    console.error(
+                        "Error buscando negocio:",
+                        membershipError
+                    );
+
+                    mostrarError(
+                        "No se ha podido cargar el negocio."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !membership ||
+                    !membership.businesses
+                ) {
+
+                    mostrarError(
+                        "Tu usuario no está asociado a ningún negocio."
+                    );
+
+                    return;
+                }
+
+
+                negocioActual =
+                    membership.businesses;
+
+
+                /*
+                 * Mostrar datos
+                 */
+
+                rellenarFormulario(
+                    negocioActual
                 );
 
 
-        if (error) {
+                loading.style.display =
+                    "none";
 
-            console.error(
-                "Error guardando:",
-                error
-            );
+                content.style.display =
+                    "block";
 
-            throw error;
+
+            } catch (error) {
+
+                console.error(
+                    "Error inesperado:",
+                    error
+                );
+
+                mostrarError(
+                    "Ha ocurrido un error inesperado."
+                );
+
+            }
+
         }
 
 
-        // Actualizamos los datos locales
+        /*
+         * RELLENAR FORMULARIO
+         */
 
-        negocioActual = {
-            ...negocioActual,
-            ...datos
-        };
+        function rellenarFormulario(
+            negocio
+        ) {
 
-
-        mensaje.className =
-            "message success";
-
-        mensaje.textContent =
-            "Cambios guardados correctamente.";
+            document.title =
+                `${negocio.name || "Mi negocio"} | Soluciones Digitales`;
 
 
-        boton.disabled = false;
+            document.getElementById(
+                "businessTitle"
+            ).textContent =
+                negocio.name || "Mi negocio";
 
-        boton.textContent =
-            "Guardar cambios";
+
+            document.getElementById(
+                "name"
+            ).value =
+                negocio.name || "";
 
 
-    } catch (error) {
+            document.getElementById(
+                "slug"
+            ).value =
+                negocio.slug || "";
 
-        console.error(
-            "Error:",
-            error
+
+            document.getElementById(
+                "description"
+            ).value =
+                negocio.description || "";
+
+
+            document.getElementById(
+                "address"
+            ).value =
+                negocio.address || "";
+
+
+            document.getElementById(
+                "city"
+            ).value =
+                negocio.city || "";
+
+
+            document.getElementById(
+                "province"
+            ).value =
+                negocio.province || "";
+
+
+            document.getElementById(
+                "phone"
+            ).value =
+                negocio.phone || "";
+
+
+            document.getElementById(
+                "whatsapp"
+            ).value =
+                negocio.whatsapp || "";
+
+
+            document.getElementById(
+                "website"
+            ).value =
+                negocio.website || "";
+
+
+            document.getElementById(
+                "menu_url"
+            ).value =
+                negocio.menu_url || "";
+
+
+            document.getElementById(
+                "google_url"
+            ).value =
+                negocio.google_url || "";
+
+
+            document.getElementById(
+                "instagram_url"
+            ).value =
+                negocio.instagram_url || "";
+
+
+            document.getElementById(
+                "facebook_url"
+            ).value =
+                negocio.facebook_url || "";
+
+
+            document.getElementById(
+                "tiktok_url"
+            ).value =
+                negocio.tiktok_url || "";
+
+
+            document.getElementById(
+                "logo_url"
+            ).value =
+                negocio.logo_url || "";
+
+
+            /*
+             * Colores
+             */
+
+            const primary =
+                validarColor(
+                    negocio.primary_color
+                )
+                    ? negocio.primary_color
+                    : "#111827";
+
+
+            const secondary =
+                validarColor(
+                    negocio.secondary_color
+                )
+                    ? negocio.secondary_color
+                    : "#2563eb";
+
+
+            document.getElementById(
+                "primary_color"
+            ).value =
+                primary;
+
+
+            document.getElementById(
+                "primary_color_picker"
+            ).value =
+                primary;
+
+
+            document.getElementById(
+                "secondary_color"
+            ).value =
+                secondary;
+
+
+            document.getElementById(
+                "secondary_color_picker"
+            ).value =
+                secondary;
+
+
+            actualizarLogoPreview(
+                negocio.logo_url
+            );
+
+        }
+
+
+        /*
+         * GUARDAR
+         */
+
+        saveButton.addEventListener(
+            "click",
+            guardarCambios
         );
 
 
-        mensaje.className =
-            "message error";
+        async function guardarCambios() {
 
-        mensaje.textContent =
-            error.message ||
-            "No se han podido guardar los cambios.";
+            if (!negocioActual) {
 
+                mostrarStatus(
+                    "No se ha cargado ningún negocio.",
+                    "error"
+                );
 
-        boton.disabled = false;
-
-        boton.textContent =
-            "Guardar cambios";
-    }
-
-}
+                return;
+            }
 
 
-/* ==========================================
-   UTILIDADES
-========================================== */
+            saveButton.disabled = true;
 
-function escapeHtml(texto) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        texto ?? "";
-
-    return div.innerHTML;
-}
+            saveButton.textContent =
+                "Guardando...";
 
 
-function colorValido(
-    color,
-    defecto
-) {
-
-    if (
-        typeof color === "string" &&
-        /^#[0-9A-Fa-f]{6}$/.test(color)
-    ) {
-
-        return color;
-    }
-
-    return defecto;
-}
+            ocultarStatus();
 
 
-function mostrarError(
-    mensaje
-) {
+            try {
 
-    document.getElementById(
-        "app"
-    ).innerHTML = `
+                const datos = {
 
-        <main class="loading">
+                    name:
+                        document.getElementById(
+                            "name"
+                        ).value.trim(),
 
-            <div>
-                ${escapeHtml(mensaje)}
-            </div>
+                    description:
+                        document.getElementById(
+                            "description"
+                        ).value.trim(),
 
-        </main>
+                    address:
+                        document.getElementById(
+                            "address"
+                        ).value.trim(),
 
-    `;
-}
+                    city:
+                        document.getElementById(
+                            "city"
+                        ).value.trim(),
 
-</script>
+                    province:
+                        document.getElementById(
+                            "province"
+                        ).value.trim(),
+
+                    phone:
+                        document.getElementById(
+                            "phone"
+                        ).value.trim(),
+
+                    whatsapp:
+                        document.getElementById(
+                            "whatsapp"
+                        ).value.trim(),
+
+                    website:
+                        document.getElementById(
+                            "website"
+                        ).value.trim(),
+
+                    menu_url:
+                        document.getElementById(
+                            "menu_url"
+                        ).value.trim(),
+
+                    google_url:
+                        document.getElementById(
+                            "google_url"
+                        ).value.trim(),
+
+                    instagram_url:
+                        document.getElementById(
+                            "instagram_url"
+                        ).value.trim(),
+
+                    facebook_url:
+                        document.getElementById(
+                            "facebook_url"
+                        ).value.trim(),
+
+                    tiktok_url:
+                        document.getElementById(
+                            "tiktok_url"
+                        ).value.trim(),
+
+                    logo_url:
+                        document.getElementById(
+                            "logo_url"
+                        ).value.trim(),
+
+                    primary_color:
+                        document.getElementById(
+                            "primary_color"
+                        ).value.trim(),
+
+                    secondary_color:
+                        document.getElementById(
+                            "secondary_color"
+                        ).value.trim()
+
+                };
+
+
+                /*
+                 * Actualizar Supabase
+                 */
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .from("businesses")
+                        .update(datos)
+                        .eq(
+                            "id",
+                            negocioActual.id
+                        )
+                        .select()
+                        .single();
+
+
+                if (error) {
+
+                    console.error(
+                        "Error guardando negocio:",
+                        error
+                    );
+
+                    mostrarStatus(
+                        "No se han podido guardar los cambios.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                /*
+                 * Actualizar objeto local
+                 */
+
+                negocioActual =
+                    data;
+
+
+                /*
+                 * Actualizar interfaz
+                 */
+
+                document.getElementById(
+                    "businessTitle"
+                ).textContent =
+                    data.name || "Mi negocio";
+
+
+                document.title =
+                    `${data.name || "Mi negocio"} | Soluciones Digitales`;
+
+
+                actualizarLogoPreview(
+                    data.logo_url
+                );
+
+
+                mostrarStatus(
+                    "Cambios guardados correctamente.",
+                    "success"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error inesperado:",
+                    error
+                );
+
+                mostrarStatus(
+                    "Ha ocurrido un error inesperado.",
+                    "error"
+                );
+
+            } finally {
+
+                saveButton.disabled =
+                    false;
+
+                saveButton.textContent =
+                    "Guardar cambios";
+
+            }
+
+        }
+
+
+        /*
+         * COLORES
+         */
+
+        document.getElementById(
+            "primary_color_picker"
+        ).addEventListener(
+            "input",
+            function() {
+
+                document.getElementById(
+                    "primary_color"
+                ).value =
+                    this.value;
+
+            }
+        );
+
+
+        document.getElementById(
+            "secondary_color_picker"
+        ).addEventListener(
+            "input",
+            function() {
+
+                document.getElementById(
+                    "secondary_color"
+                ).value =
+                    this.value;
+
+            }
+        );
+
+
+        document.getElementById(
+            "primary_color"
+        ).addEventListener(
+            "input",
+            function() {
+
+                if (
+                    validarColor(this.value)
+                ) {
+
+                    document.getElementById(
+                        "primary_color_picker"
+                    ).value =
+                        this.value;
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "secondary_color"
+        ).addEventListener(
+            "input",
+            function() {
+
+                if (
+                    validarColor(this.value)
+                ) {
+
+                    document.getElementById(
+                        "secondary_color_picker"
+                    ).value =
+                        this.value;
+
+                }
+
+            }
+        );
+
+
+        /*
+         * PREVISUALIZACIÓN LOGO
+         */
+
+        document.getElementById(
+            "logo_url"
+        ).addEventListener(
+            "input",
+            function() {
+
+                actualizarLogoPreview(
+                    this.value.trim()
+                );
+
+            }
+        );
+
+
+        function actualizarLogoPreview(
+            url
+        ) {
+
+            const contenedor =
+                document.getElementById(
+                    "logoPreview"
+                );
+
+
+            contenedor.innerHTML = "";
+
+
+            if (!url) {
+
+                contenedor.textContent =
+                    "SD";
+
+                return;
+            }
+
+
+            const imagen =
+                document.createElement(
+                    "img"
+                );
+
+
+            imagen.src =
+                url;
+
+
+            imagen.alt =
+                "Logo";
+
+
+            imagen.onerror =
+                function() {
+
+                    contenedor.innerHTML =
+                        "SD";
+
+                };
+
+
+            contenedor.appendChild(
+                imagen
+            );
+
+        }
+
+
+        /*
+         * VALIDAR COLOR
+         */
+
+        function validarColor(
+            color
+        ) {
+
+            return /^#[0-9A-Fa-f]{6}$/.test(
+                color || ""
+            );
+
+        }
+
+
+        /*
+         * MENSAJES
+         */
+
+        function mostrarStatus(
+            texto,
+            tipo
+        ) {
+
+            status.className =
+                `status ${tipo}`;
+
+            status.textContent =
+                texto;
+
+        }
+
+
+        function ocultarStatus() {
+
+            status.className =
+                "status";
+
+            status.textContent =
+                "";
+
+        }
+
+
+        /*
+         * ERROR
+         */
+
+        function mostrarError(
+            texto
+        ) {
+
+            loading.style.display =
+                "none";
+
+            content.style.display =
+                "block";
+
+            content.innerHTML = `
+
+                <section class="card">
+
+                    <h2 class="card-title">
+                        No se puede cargar el negocio
+                    </h2>
+
+                    <p class="card-description">
+                        ${texto}
+                    </p>
+
+                    <a
+                        href="./"
+                        class="back-button"
+                    >
+                        ← Volver al panel
+                    </a>
+
+                </section>
+
+            `;
+
+        }
+
+    </script>
 
 </body>
 
